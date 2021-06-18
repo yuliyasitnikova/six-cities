@@ -1,7 +1,10 @@
 import React from 'react';
+import CitiesScreen from '../cities-screen/cities-screen';
 
 function App() {
-  return <p>Hello, world!</p>;
+  return (
+    <CitiesScreen />
+  );
 }
 
 export default App;
