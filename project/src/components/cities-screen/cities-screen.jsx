@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CitiesPlace from '../cities-place/cities-place';
+import CitiesPlacesList from '../cities-places-list/cities-places-list';
+import CitiesPlaceProp from '../cities-place/cities-place.prop';
 
 function CitiesScreen(props) {
-  const {placesCount} = props;
+  const {placesCount, offers} = props;
 
   return (
     <div className="page page--gray page--main">
@@ -93,13 +94,7 @@ function CitiesScreen(props) {
                   <li className="places__option" tabIndex="0">Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                <CitiesPlace />
-                <CitiesPlace />
-                <CitiesPlace />
-                <CitiesPlace />
-                <CitiesPlace />
-              </div>
+              <CitiesPlacesList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
@@ -113,6 +108,7 @@ function CitiesScreen(props) {
 
 CitiesScreen.propTypes = {
   placesCount: PropTypes.number.isRequired,
+  offers: PropTypes.arrayOf(CitiesPlaceProp),
 };
 
 export default CitiesScreen;
