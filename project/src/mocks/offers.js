@@ -1,5 +1,8 @@
 const offers = [
   {
+    city: {
+      name: 'Amsterdam',
+    },
     id: 1,
     isPremium: true,
     isFavorite: false,
@@ -10,6 +13,9 @@ const offers = [
     rating: 4,
   },
   {
+    city: {
+      name: 'Cologne',
+    },
     id: 2,
     isPremium: false,
     isFavorite: true,
@@ -20,6 +26,9 @@ const offers = [
     rating: 5,
   },
   {
+    city: {
+      name: 'Amsterdam',
+    },
     id: 3,
     isPremium: false,
     isFavorite: false,
@@ -30,6 +39,9 @@ const offers = [
     rating: 4,
   },
   {
+    city: {
+      name: 'Amsterdam',
+    },
     id: 4,
     isPremium: true,
     isFavorite: false,

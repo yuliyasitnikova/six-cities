@@ -25,7 +25,7 @@ function App(props) {
           <AuthScreen />
         </Route>
         <Route path={AppRoute.FAVORITES} exact>
-          <FavoriteScreen />
+          <FavoriteScreen offers={offers} />
         </Route>
         <Route path={AppRoute.ROOM} exact>
           <PlaceScreen />
