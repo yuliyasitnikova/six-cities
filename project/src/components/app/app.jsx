@@ -7,21 +7,25 @@ import CitiesScreen from '../cities-screen/cities-screen';
 import PlaceScreen from '../place-screen/place-screen';
 import FavoriteScreen from '../favorites-screen/favorites-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import CitiesPlaceProp from '../cities-place/cities-place.prop';
 
 function App(props) {
-  const {placesCount} = props;
+  const {placesCount, offers} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.MAIN} exact>
-          <CitiesScreen placesCount={placesCount} />
+          <CitiesScreen
+            placesCount={placesCount}
+            offers={offers}
+          />
         </Route>
         <Route path={AppRoute.LOGIN} exact>
           <AuthScreen />
         </Route>
         <Route path={AppRoute.FAVORITES} exact>
-          <FavoriteScreen />
+          <FavoriteScreen offers={offers} />
         </Route>
         <Route path={AppRoute.ROOM} exact>
           <PlaceScreen />
@@ -36,6 +40,7 @@ function App(props) {
 
 App.propTypes = {
   placesCount: PropTypes.number.isRequired,
+  offers: PropTypes.arrayOf(CitiesPlaceProp),
 };
 
 export default App;

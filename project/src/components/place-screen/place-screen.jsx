@@ -1,30 +1,11 @@
 import React from 'react';
-import Logo from '../logo/logo';
+import Header from '../header/header';
+import ReviewsForm from '../reviews-form/reviews-form';
 
 function PlaceScreen() {
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__login">Sign in</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      <Header />
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
@@ -60,7 +41,7 @@ function PlaceScreen() {
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
+                    <use xlinkHref="#icon-bookmark" />
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
                 </button>
@@ -173,6 +154,7 @@ function PlaceScreen() {
                     </div>
                   </li>
                 </ul>
+                <ReviewsForm />
               </section>
             </div>
           </div>
@@ -196,7 +178,7 @@ function PlaceScreen() {
                     </div>
                     <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
                       <svg className="place-card__bookmark-icon" width="18" height="19">
-                        <use xlinkHref="#icon-bookmark"></use>
+                        <use xlinkHref="#icon-bookmark" />
                       </svg>
                       <span className="visually-hidden">In bookmarks</span>
                     </button>
@@ -228,7 +210,7 @@ function PlaceScreen() {
                     </div>
                     <button className="place-card__bookmark-button button" type="button">
                       <svg className="place-card__bookmark-icon" width="18" height="19">
-                        <use xlinkHref="#icon-bookmark"></use>
+                        <use xlinkHref="#icon-bookmark" />
                       </svg>
                       <span className="visually-hidden">To bookmarks</span>
                     </button>
@@ -260,7 +242,7 @@ function PlaceScreen() {
                     </div>
                     <button className="place-card__bookmark-button button" type="button">
                       <svg className="place-card__bookmark-icon" width="18" height="19">
-                        <use xlinkHref="#icon-bookmark"></use>
+                        <use xlinkHref="#icon-bookmark" />
                       </svg>
                       <span className="visually-hidden">To bookmarks</span>
                     </button>
