@@ -4,9 +4,7 @@ import Header from '../header/header';
 import CitiesPlacesList from '../cities-places-list/cities-places-list';
 import CitiesPlaceProp from '../cities-place/cities-place.prop';
 
-function CitiesScreen(props) {
-  const {placesCount, offers} = props;
-
+function CitiesScreen({placesCount, offers}) {
   return (
     <div className="page page--gray page--main">
       <Header />
