@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {city} from '../../const';
 import PlacesList from '../places-list/places-list';
@@ -6,6 +6,15 @@ import PlacesMap from '../places-map/places-map';
 import placesItemProp from '../places-item/places-item.prop';
 
 function Places({placesCount, offers}) {
+  const [activePoint, setActivePoint] = useState({});
+
+  const onItemHover = (itemId) => {
+    const activeItem = offers.find((offer) => (
+      offer.id === itemId
+    ));
+    setActivePoint(activeItem);
+  };
+
   return (
     <div className="cities">
       <div className="cities__places-container container">
@@ -27,10 +36,10 @@ function Places({placesCount, offers}) {
               <li className="places__option" tabIndex="0">Top rated first</li>
             </ul>
           </form>
-          <PlacesList offers={offers} />
+          <PlacesList offers={offers} onItemHover={onItemHover} />
         </section>
         <div className="cities__right-section">
-          <PlacesMap city={city} points={offers} />
+          <PlacesMap city={city} points={offers} activePoint={activePoint} />
         </div>
       </div>
     </div>

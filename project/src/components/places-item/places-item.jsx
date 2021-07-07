@@ -1,15 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import placesItemProp from './places-item.prop';
 
-function PlacesItem({offer}) {
+function PlacesItem({offer, onHover}) {
   const {id, isPremium, isFavorite, previewImage, price, title, type, rating} = offer;
   const ratingValue = `${20 * rating}%`;
   const detailHref = AppRoute.ROOM.replace(':id', id);
 
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card" onMouseEnter={(evt) => {onHover(id);}}>
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={detailHref}>
@@ -46,6 +47,7 @@ function PlacesItem({offer}) {
 
 PlacesItem.propTypes = {
   offer: placesItemProp,
+  onHover: PropTypes.func.isRequired,
 };
 
 export default PlacesItem;
