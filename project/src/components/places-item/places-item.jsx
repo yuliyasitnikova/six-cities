@@ -1,9 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
-import CitiesPlaceProp from './cities-place.prop';
+import placesItemProp from './places-item.prop';
 
-function CitiesPlace({offer}) {
+function PlacesItem({offer}) {
   const {id, isPremium, isFavorite, previewImage, price, title, type, rating} = offer;
   const ratingValue = `${20 * rating}%`;
   const detailHref = AppRoute.ROOM.replace(':id', id);
@@ -44,8 +44,8 @@ function CitiesPlace({offer}) {
   );
 }
 
-CitiesPlace.propTypes = {
-  offer: CitiesPlaceProp,
+PlacesItem.propTypes = {
+  offer: placesItemProp,
 };
 
-export default CitiesPlace;
+export default PlacesItem;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Header from '../header/header';
 import Favorites from '../favorites/favorites';
 import Footer from '../footer/footer';
-import FavoritePlaceProp from '../favorites-place/favorites-place.prop';
+import favoriteItemProp from '../favorites-item/favorites-item.prop';
 
 function FavoriteScreen({offers}) {
   return (
@@ -20,7 +20,7 @@ function FavoriteScreen({offers}) {
 }
 
 FavoriteScreen.propTypes = {
-  offers: PropTypes.arrayOf(FavoritePlaceProp),
+  offers: PropTypes.arrayOf(favoriteItemProp),
 };
 
 export default FavoriteScreen;

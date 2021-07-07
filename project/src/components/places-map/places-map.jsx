@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap/useMap';
 import {MAP_ICON_DEFAULT} from '../../const';
 
-function CitiesMap({city, points}) {
+function PlacesMap({city, points}) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -37,7 +37,7 @@ function CitiesMap({city, points}) {
   );
 }
 
-CitiesMap.propTypes = {
+PlacesMap.propTypes = {
   city: PropTypes.shape({
     location: PropTypes.shape({
       latitude: PropTypes.number.isRequired,
@@ -57,4 +57,4 @@ CitiesMap.propTypes = {
   ),
 };
 
-export default CitiesMap;
+export default PlacesMap;

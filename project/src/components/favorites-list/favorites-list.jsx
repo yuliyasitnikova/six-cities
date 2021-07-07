@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
-import FavoritePlace from '../favorites-place/favorites-place';
-import FavoritePlaceProp from '../favorites-place/favorites-place.prop';
+import FavoriteItem from '../favorites-item/favorites-item';
+import favoriteItemProp from '../favorites-item/favorites-item.prop';
 
 function FavoriteList({offers}) {
   const favoriteObject = useMemo(() => {
@@ -26,7 +26,7 @@ function FavoriteList({offers}) {
           </div>
           <div className="favorites__places">
             {favoriteObject[item].map((offer) => (
-              <FavoritePlace key={offer.id} offer={offer} />
+              <FavoriteItem key={offer.id} offer={offer} />
             ))}
           </div>
         </li>
@@ -36,7 +36,7 @@ function FavoriteList({offers}) {
 }
 
 FavoriteList.propTypes = {
-  offers: PropTypes.arrayOf(FavoritePlaceProp),
+  offers: PropTypes.arrayOf(favoriteItemProp),
 };
 
 export default FavoriteList;
