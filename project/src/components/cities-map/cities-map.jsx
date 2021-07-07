@@ -1,10 +1,34 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
+import leaflet from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap/useMap';
+import {MAP_ICON_DEFAULT} from '../../const';
 
-function CitiesMap({city}) {
+function CitiesMap({city, points}) {
   const mapRef = useRef(null);
-  useMap(mapRef, city);
+  const map = useMap(mapRef, city);
+
+  const defaultIcon = leaflet.icon({
+    iconUrl: MAP_ICON_DEFAULT,
+    iconSize: [27, 39],
+    iconAnchor: [13, 39],
+  });
+
+  useEffect(() => {
+    if (map) {
+      points.forEach(({city: {location}}) => {
+        leaflet
+          .marker({
+            lat: location.latitude,
+            lng: location.longitude,
+          }, {
+            icon: defaultIcon,
+          })
+          .addTo(map);
+      });
+    }
+  }, [map, points]);
 
   return (
     <section className="cities__map map">
@@ -21,6 +45,16 @@ CitiesMap.propTypes = {
     }).isRequired,
     zoom: PropTypes.number.isRequired,
   }).isRequired,
+  points: PropTypes.arrayOf(
+    PropTypes.shape({
+      city: PropTypes.shape({
+        location: PropTypes.shape({
+          latitude: PropTypes.number.isRequired,
+          longitude: PropTypes.number.isRequired,
+        }).isRequired,
+      }).isRequired,
+    }).isRequired,
+  ),
 };
 
 export default CitiesMap;

@@ -15,3 +15,5 @@ export const Cities = {
     name: 'Amsterdam',
   },
 };
+
+export const MAP_ICON_DEFAULT = 'img/pin.svg';

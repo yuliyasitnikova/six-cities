@@ -71,7 +71,7 @@ function CitiesScreen({placesCount, offers}) {
               <CitiesPlacesList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <CitiesMap city={Cities.AMSTERDAM} />
+              <CitiesMap city={Cities.AMSTERDAM} points={offers} />
             </div>
           </div>
         </div>
