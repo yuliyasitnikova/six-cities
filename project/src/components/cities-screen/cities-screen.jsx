@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Cities} from '../../const';
 import Header from '../header/header';
 import CitiesPlacesList from '../cities-places-list/cities-places-list';
+import CitiesMap from '../cities-map/cities-map';
 import CitiesPlaceProp from '../cities-place/cities-place.prop';
 
 function CitiesScreen({placesCount, offers}) {
@@ -69,7 +71,7 @@ function CitiesScreen({placesCount, offers}) {
               <CitiesPlacesList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <CitiesMap city={Cities.AMSTERDAM} />
             </div>
           </div>
         </div>

@@ -4,3 +4,14 @@ export const AppRoute = {
   FAVORITES: '/favorites',
   ROOM: '/offer/:id',
 };
+
+export const Cities = {
+  AMSTERDAM: {
+    location: {
+      latitude: 52.38333,
+      longitude: 4.9,
+    },
+    zoom: 12,
+    name: 'Amsterdam',
+  },
+};
