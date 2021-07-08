@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Header from '../header/header';
 import Favorites from '../favorites/favorites';
 import Footer from '../footer/footer';
-import favoriteItemProp from '../favorites-item/favorites-item.prop';
+import favoritesItemProp from '../favorites-item/favorites-item.prop';
 
-function FavoriteScreen({offers}) {
+function FavoritesScreen({offers}) {
   return (
     <div className="page">
       <Header />
@@ -19,8 +19,8 @@ function FavoriteScreen({offers}) {
   );
 }
 
-FavoriteScreen.propTypes = {
-  offers: PropTypes.arrayOf(favoriteItemProp),
+FavoritesScreen.propTypes = {
+  offers: PropTypes.arrayOf(favoritesItemProp),
 };
 
-export default FavoriteScreen;
+export default FavoritesScreen;

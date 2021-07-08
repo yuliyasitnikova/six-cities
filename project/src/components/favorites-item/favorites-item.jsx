@@ -1,9 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
-import favoriteItemProp from './favorites-item.prop';
+import favoritesItemProp from './favorites-item.prop';
 
-function FavoriteItem({offer}) {
+function FavoritesItem({offer}) {
   const {id, previewImage, price, title, type, rating} = offer;
   const ratingValue = `${20 * rating}%`;
   const detailHref = AppRoute.ROOM.replace(':id', id);
@@ -30,7 +30,7 @@ function FavoriteItem({offer}) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: ratingValue}}></span>
+            <span style={{width: ratingValue}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -43,8 +43,8 @@ function FavoriteItem({offer}) {
   );
 }
 
-FavoriteItem.propTypes = {
-  offer: favoriteItemProp,
+FavoritesItem.propTypes = {
+  offer: favoritesItemProp,
 };
 
-export default FavoriteItem;
+export default FavoritesItem;

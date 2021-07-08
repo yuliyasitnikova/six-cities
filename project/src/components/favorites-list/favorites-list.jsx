@@ -1,21 +1,21 @@
 import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
-import FavoriteItem from '../favorites-item/favorites-item';
-import favoriteItemProp from '../favorites-item/favorites-item.prop';
+import FavoritesItem from '../favorites-item/favorites-item';
+import favoritesItemProp from '../favorites-item/favorites-item.prop';
 
-function FavoriteList({offers}) {
-  const favoriteObject = useMemo(() => {
-    const _favoriteObject = {};
+function FavoritesList({offers}) {
+  const favoritesObject = useMemo(() => {
+    const _favoritesObject = {};
     offers.forEach((offer) => {
-      const currentCityArr = _favoriteObject[offer.city.name] || [];
-      _favoriteObject[offer.city.name] = [...currentCityArr, offer];
+      const currentCityArr = _favoritesObject[offer.city.name] || [];
+      _favoritesObject[offer.city.name] = [...currentCityArr, offer];
     });
-    return _favoriteObject;
+    return _favoritesObject;
   }, [offers]);
 
   return (
     <ul className="favorites__list">
-      {Object.keys(favoriteObject).map((item) => (
+      {Object.keys(favoritesObject).map((item) => (
         <li key={item} className="favorites__locations-items">
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
@@ -25,8 +25,8 @@ function FavoriteList({offers}) {
             </div>
           </div>
           <div className="favorites__places">
-            {favoriteObject[item].map((offer) => (
-              <FavoriteItem key={offer.id} offer={offer} />
+            {favoritesObject[item].map((offer) => (
+              <FavoritesItem key={offer.id} offer={offer} />
             ))}
           </div>
         </li>
@@ -35,8 +35,8 @@ function FavoriteList({offers}) {
   );
 }
 
-FavoriteList.propTypes = {
-  offers: PropTypes.arrayOf(favoriteItemProp),
+FavoritesList.propTypes = {
+  offers: PropTypes.arrayOf(favoritesItemProp),
 };
 
-export default FavoriteList;
+export default FavoritesList;

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import AuthScreen from '../auth-screen/auth-screen';
 import PlacesScreen from '../places-screen/places-screen';
 import PlaceScreen from '../place-screen/place-screen';
-import FavoriteScreen from '../favorites-screen/favorites-screen';
+import FavoritesScreen from '../favorites-screen/favorites-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import placesItemProp from '../places-item/places-item.prop';
 
@@ -25,7 +25,7 @@ function App(props) {
           <AuthScreen />
         </Route>
         <Route path={AppRoute.FAVORITES} exact>
-          <FavoriteScreen offers={offers} />
+          <FavoritesScreen offers={offers} />
         </Route>
         <Route path={AppRoute.ROOM} exact>
           <PlaceScreen />

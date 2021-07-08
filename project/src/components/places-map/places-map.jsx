@@ -41,7 +41,7 @@ function PlacesMap({city, points, activePoint}) {
 
   return (
     <section className="cities__map map">
-      <div style={{'height': '100%'}} ref={mapRef}></div>
+      <div style={{'height': '100%'}} ref={mapRef} />
     </section>
   );
 }

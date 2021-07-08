@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FavoriteList from '../favorites-list/favorites-list';
-import favoriteItemProp from '../favorites-item/favorites-item.prop';
+import favoritesItemProp from '../favorites-item/favorites-item.prop';
 
 function Favorites({offers}) {
   return (
@@ -13,7 +13,7 @@ function Favorites({offers}) {
 }
 
 Favorites.propTypes = {
-  offers: PropTypes.arrayOf(favoriteItemProp),
+  offers: PropTypes.arrayOf(favoritesItemProp),
 };
 
 export default Favorites;
