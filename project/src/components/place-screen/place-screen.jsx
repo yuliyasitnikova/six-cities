@@ -48,7 +48,7 @@ function PlaceScreen() {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: '80%'}}></span>
+                  <span style={{width: '80%'}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">4.8</span>
@@ -142,7 +142,7 @@ function PlaceScreen() {
                     <div className="reviews__info">
                       <div className="reviews__rating rating">
                         <div className="reviews__stars rating__stars">
-                          <span style={{width: '80%'}}></span>
+                          <span style={{width: '80%'}} />
                           <span className="visually-hidden">Rating</span>
                         </div>
                       </div>
@@ -158,7 +158,7 @@ function PlaceScreen() {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map" />
         </section>
         <div className="container">
           <section className="near-places places">
@@ -185,7 +185,7 @@ function PlaceScreen() {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style={{width: '80%'}}></span>
+                      <span style={{width: '80%'}} />
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
@@ -217,7 +217,7 @@ function PlaceScreen() {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style={{width: '80%'}}></span>
+                      <span style={{width: '80%'}} />
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
@@ -249,7 +249,7 @@ function PlaceScreen() {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style={{width: '100%'}}></span>
+                      <span style={{width: '100%'}} />
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>

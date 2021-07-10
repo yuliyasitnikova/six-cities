@@ -1,17 +1,19 @@
 import React from 'react';
-import FavoritePlaceProp from './favorites-place.prop';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
+import favoritesItemProp from './favorites-item.prop';
 
-function FavoritePlace(props) {
-  const {offer} = props;
-  const {previewImage, price, title, type, rating} = offer;
+function FavoritesItem({offer}) {
+  const {id, previewImage, price, title, type, rating} = offer;
   const ratingValue = `${20 * rating}%`;
+  const detailHref = AppRoute.ROOM.replace(':id', id);
 
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={detailHref}>
           <img className="place-card__image" src={previewImage} width="150" height="110" alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
@@ -28,12 +30,12 @@ function FavoritePlace(props) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: ratingValue}}></span>
+            <span style={{width: ratingValue}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={detailHref}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -41,8 +43,8 @@ function FavoritePlace(props) {
   );
 }
 
-FavoritePlace.propTypes = {
-  offer: FavoritePlaceProp,
+FavoritesItem.propTypes = {
+  offer: favoritesItemProp,
 };
 
-export default FavoritePlace;
+export default FavoritesItem;
