@@ -1,60 +1,53 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {ActionCreator} from '../../store/actions';
+import classNames from 'classnames/bind';
 import Header from '../header/header';
+import Cities from '../cities/cities';
 import Places from '../places/places';
+import PlacesEmpty from '../places-empty/places-empty';
+import {CITIES} from '../../const';
 import placesItemProp from '../places-item/places-item.prop';
 
-function PlacesScreen({placesCount, offers}) {
+function PlacesScreen({city, places, onChangeCity}) {
   return (
     <div className="page page--gray page--main">
       <Header />
-      <main className="page__main page__main--index">
+      <main className={classNames('page__main', 'page__main--index', {'page__main--index-empty' : !places.length})}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
+          <Cities cities={CITIES} city={city} onChangeCity={onChangeCity} />
         </div>
-        <Places placesCount={placesCount} offers={offers} />
+        <div className="cities">
+          {
+            places.length
+              ? <Places city={city} places={places} />
+              : <PlacesEmpty />
+          }
+        </div>
       </main>
     </div>
   );
 }
 
 PlacesScreen.propTypes = {
-  placesCount: PropTypes.number.isRequired,
-  offers: PropTypes.arrayOf(placesItemProp),
+  city: PropTypes.string.isRequired,
+  places: PropTypes.arrayOf(placesItemProp),
+  onChangeCity: PropTypes.func.isRequired,
 };
 
-export default PlacesScreen;
+const mapStateToProps = (state) => ({
+  city: state.city,
+  places: state.places,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onChangeCity(city) {
+    dispatch(ActionCreator.changeCity(city));
+    dispatch(ActionCreator.fillPlaces(city));
+  },
+});
+
+export {PlacesScreen};
+export default connect(mapStateToProps, mapDispatchToProps)(PlacesScreen);

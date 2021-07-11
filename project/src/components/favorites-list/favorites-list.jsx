@@ -3,15 +3,17 @@ import PropTypes from 'prop-types';
 import FavoritesItem from '../favorites-item/favorites-item';
 import favoritesItemProp from '../favorites-item/favorites-item.prop';
 
-function FavoritesList({offers}) {
+function FavoritesList({places}) {
   const favoritesObject = useMemo(() => {
     const _favoritesObject = {};
-    offers.forEach((offer) => {
-      const currentCityArr = _favoritesObject[offer.city.name] || [];
-      _favoritesObject[offer.city.name] = [...currentCityArr, offer];
+    places.forEach((place) => {
+      if (place.isFavorite) {
+        const currentCityArr = _favoritesObject[place.city.name] || [];
+        _favoritesObject[place.city.name] = [...currentCityArr, place];
+      }
     });
     return _favoritesObject;
-  }, [offers]);
+  }, [places]);
 
   return (
     <ul className="favorites__list">
@@ -36,7 +38,7 @@ function FavoritesList({offers}) {
 }
 
 FavoritesList.propTypes = {
-  offers: PropTypes.arrayOf(favoritesItemProp),
+  places: PropTypes.arrayOf(favoritesItemProp),
 };
 
 export default FavoritesList;

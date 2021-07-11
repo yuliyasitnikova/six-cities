@@ -5,30 +5,31 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap/useMap';
 import {MAP_ICON_DEFAULT, MAP_ICON_ACTIVE} from '../../const';
 
-function PlacesMap({city, points, activePoint}) {
+function PlacesMap({points, activePoint}) {
   const mapRef = useRef(null);
+  const city = points[0].city;
   const map = useMap(mapRef, city);
 
   const defaultIcon = leaflet.icon({
     iconUrl: MAP_ICON_DEFAULT,
-    iconSize: [27, 39],
-    iconAnchor: [13, 39],
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
   });
 
   const activeIcon = leaflet.icon({
     iconUrl: MAP_ICON_ACTIVE,
-    iconSize: [27, 39],
-    iconAnchor: [13, 39],
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
   });
 
   useEffect(() => {
     if (map) {
       points.forEach((point) => {
-        const {id, city: {location}} = point;
+        const {id, location: {latitude, longitude}} = point;
         leaflet
           .marker({
-            lat: location.latitude,
-            lng: location.longitude,
+            lat: latitude,
+            lng: longitude,
           }, {
             icon: (id === activePoint.id)
               ? activeIcon
@@ -36,6 +37,11 @@ function PlacesMap({city, points, activePoint}) {
           })
           .addTo(map);
       });
+
+      /*return () => {
+        console.log(map);
+        map.clearLayers();
+      }*/
     }
   }, [map, points, activePoint]);
 
@@ -47,13 +53,7 @@ function PlacesMap({city, points, activePoint}) {
 }
 
 PlacesMap.propTypes = {
-  city: PropTypes.shape({
-    location: PropTypes.shape({
-      latitude: PropTypes.number.isRequired,
-      longitude: PropTypes.number.isRequired,
-    }).isRequired,
-    zoom: PropTypes.number.isRequired,
-  }).isRequired,
+
   points: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -61,6 +61,7 @@ PlacesMap.propTypes = {
         location: PropTypes.shape({
           latitude: PropTypes.number.isRequired,
           longitude: PropTypes.number.isRequired,
+          zoom: PropTypes.number.isRequired,
         }).isRequired,
       }).isRequired,
     }).isRequired,

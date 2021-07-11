@@ -6,7 +6,7 @@ function useMap(mapRef, city) {
 
   useEffect(() => {
     if (mapRef !== null && map === null) {
-      const {location: {latitude, longitude}, zoom} = city;
+      const {location: {latitude, longitude, zoom}} = city;
 
       const instance = leaflet.map(mapRef.current, {
         center: {
@@ -14,7 +14,11 @@ function useMap(mapRef, city) {
           lng: longitude,
         },
         zoom: zoom,
+        zoomControl: false,
+        marker: true,
       });
+      // console.log(`setView`)
+      instance.setView([latitude, longitude], zoom);
 
       leaflet
         .tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {

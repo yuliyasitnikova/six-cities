@@ -5,13 +5,13 @@ import Favorites from '../favorites/favorites';
 import Footer from '../footer/footer';
 import favoritesItemProp from '../favorites-item/favorites-item.prop';
 
-function FavoritesScreen({offers}) {
+function FavoritesScreen({places}) {
   return (
     <div className="page">
       <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <Favorites offers={offers} />
+          <Favorites places={places} />
         </div>
       </main>
       <Footer />
@@ -20,7 +20,7 @@ function FavoritesScreen({offers}) {
 }
 
 FavoritesScreen.propTypes = {
-  offers: PropTypes.arrayOf(favoritesItemProp),
+  places: PropTypes.arrayOf(favoritesItemProp),
 };
 
 export default FavoritesScreen;
