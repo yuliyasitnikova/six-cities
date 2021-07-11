@@ -5,14 +5,14 @@ export const AppRoute = {
   ROOM: '/offer/:id',
 };
 
-export const city = {
-  location: {
-    latitude: 52.38333,
-    longitude: 4.9,
-  },
-  zoom: 12,
-  name: 'Amsterdam',
-};
+export const CITIES = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];
 
 export const MAP_ICON_DEFAULT = 'img/pin.svg';
 
