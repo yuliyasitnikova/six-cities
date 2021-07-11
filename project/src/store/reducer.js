@@ -3,7 +3,7 @@ import {filterPlaces} from '../utils';
 import {CITIES} from '../const';
 import places from '../mocks/places';
 
-const defaultCity = CITIES[3];
+const defaultCity = CITIES[0];
 
 const initialState = {
   city: defaultCity,
