@@ -15,17 +15,17 @@ function FavoritesList({offers}) {
 
   return (
     <ul className="favorites__list">
-      {Object.keys(favoritesObject).map((item) => (
-        <li key={item} className="favorites__locations-items">
+      {Object.keys(favoritesObject).map((cityName) => (
+        <li key={cityName} className="favorites__locations-items">
           <div className="favorites__locations locations locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="#">
-                <span>{item}</span>
+                <span>{cityName}</span>
               </a>
             </div>
           </div>
           <div className="favorites__places">
-            {favoritesObject[item].map((offer) => (
+            {favoritesObject[cityName].map((offer) => (
               <FavoritesItem key={offer.id} offer={offer} />
             ))}
           </div>
