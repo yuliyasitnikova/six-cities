@@ -5,19 +5,20 @@ function useMap(mapRef, city) {
   const [map, setMap] = useState(null);
 
   useEffect(() => {
-    if (mapRef !== null && map === null) {
+    if (mapRef !== null) {
       const {location: {latitude, longitude, zoom}} = city;
 
+      if (map !== null) {
+        map.flyTo([latitude, longitude], zoom, {animate: true, duration: 2.5, maxZoom: 20});
+        return;
+      }
+
       const instance = leaflet.map(mapRef.current, {
-        center: {
-          lat: latitude,
-          lng: longitude,
-        },
+        center: [latitude, longitude],
         zoom: zoom,
         zoomControl: false,
-        marker: true,
       });
-      // console.log(`setView`)
+
       instance.setView([latitude, longitude], zoom);
 
       leaflet

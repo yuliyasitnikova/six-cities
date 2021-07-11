@@ -7,9 +7,9 @@ import placesItemProp from '../places-item/places-item.prop';
 function Places({city, places}) {
   const [activePoint, setActivePoint] = useState({});
 
-  const onItemHover = (itemId) => {
-    const activeItem = places.find((offer) => (
-      offer.id === itemId
+  const onItemHover = (placeId) => {
+    const activeItem = places.find((place) => (
+      place.id === placeId
     ));
     setActivePoint(activeItem);
   };

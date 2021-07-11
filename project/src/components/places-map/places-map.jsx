@@ -9,6 +9,7 @@ function PlacesMap({points, activePoint}) {
   const mapRef = useRef(null);
   const city = points[0].city;
   const map = useMap(mapRef, city);
+  const markers = [];
 
   const defaultIcon = leaflet.icon({
     iconUrl: MAP_ICON_DEFAULT,
@@ -26,22 +27,16 @@ function PlacesMap({points, activePoint}) {
     if (map) {
       points.forEach((point) => {
         const {id, location: {latitude, longitude}} = point;
-        leaflet
-          .marker({
-            lat: latitude,
-            lng: longitude,
-          }, {
-            icon: (id === activePoint.id)
-              ? activeIcon
-              : defaultIcon,
-          })
-          .addTo(map);
+        const marker = leaflet.marker([latitude, longitude], {
+          icon: (id === activePoint.id)
+            ? activeIcon
+            : defaultIcon,
+        });
+        marker.addTo(map);
+        markers.push(marker);
       });
 
-      /*return () => {
-        console.log(map);
-        map.clearLayers();
-      }*/
+      return () => markers.forEach((marker) => marker.remove());
     }
   }, [map, points, activePoint]);
 
