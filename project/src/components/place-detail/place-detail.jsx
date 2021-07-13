@@ -1,11 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
+import PlaceMap from '../place-map/place-map';
 import ReviewsList from '../reviews-list/reviews-list';
 import ReviewsForm from '../reviews-form/reviews-form';
 import {capitalize} from '../../utils';
 import placeDetailProp from './place-detail.prop';
+import placesItemProp from '../places-item/places-item.prop';
 
-function PlaceDetail({place}) {
+function PlaceDetail({place, placesNear}) {
   const {bedrooms, description, goods, host: {avatar: hostAvatar, name: hostName, isPro: hostIsPro}, images, isFavorite, isPremium, maxAdults, price, rating, title, type} = place;
   const ratingValue = `${20 * rating}%`;
 
@@ -93,13 +96,14 @@ function PlaceDetail({place}) {
           </section>
         </div>
       </div>
-      <section className="property__map map" />
+      <PlaceMap points={placesNear} />
     </section>
   );
 }
 
 PlaceDetail.propTypes = {
   place: placeDetailProp,
+  placesNear: PropTypes.arrayOf(placesItemProp),
 };
 
 export default PlaceDetail;
