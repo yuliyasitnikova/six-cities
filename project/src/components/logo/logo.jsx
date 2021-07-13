@@ -1,23 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Link, useLocation} from 'react-router-dom';
 import {AppRoute} from '../../const';
 
-function Logo() {
-  const location = useLocation();
-
-  if (location.pathname === AppRoute.MAIN) {
-    return (
-      <a className="header__logo-link header__logo-link--active">
-        <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-      </a>
-    );
-  }
+function Logo(props) {
+  const {pathname} = useLocation();
 
   return (
-    <Link className="header__logo-link" to={AppRoute.MAIN}>
-      <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-    </Link>
+    pathname === AppRoute.MAIN
+      ? <a className="header__logo-link header__logo-link--active">{props.children}</a>
+      : <Link className="header__logo-link" to={AppRoute.MAIN}>{props.children}</Link>
   );
 }
+
+Logo.propTypes = {
+  children: PropTypes.element.isRequired,
+};
 
 export default Logo;

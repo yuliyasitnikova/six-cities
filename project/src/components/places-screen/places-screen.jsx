@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/actions';
-import classNames from 'classnames/bind';
 import Header from '../header/header';
 import Cities from '../cities/cities';
 import Places from '../places/places';
 import PlacesEmpty from '../places-empty/places-empty';
 import {CITIES} from '../../const';
+import {filterPlaces} from '../../utils';
 import placesItemProp from '../places-item/places-item.prop';
 
 function PlacesScreen({city, places, onChangeCity}) {
@@ -22,7 +23,7 @@ function PlacesScreen({city, places, onChangeCity}) {
         <div className="cities">
           {
             places.length
-              ? <Places city={city} places={places} />
+              ? <Places city={city} places={filterPlaces(places, city)} />
               : <PlacesEmpty />
           }
         </div>
@@ -45,7 +46,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onChangeCity(city) {
     dispatch(ActionCreator.changeCity(city));
-    dispatch(ActionCreator.fillPlaces(city));
   },
 });
 

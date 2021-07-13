@@ -1,16 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropsTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import LoadingScreen from '../loading-screen/loading-screen';
 import AuthScreen from '../auth-screen/auth-screen';
 import PlacesScreen from '../places-screen/places-screen';
 import PlaceScreen from '../place-screen/place-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import placesItemProp from '../places-item/places-item.prop';
 
-function App(props) {
-  const {places} = props;
+function App({isPlacesLoaded}) {
+  if (!isPlacesLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <BrowserRouter>
@@ -22,7 +27,7 @@ function App(props) {
           <AuthScreen />
         </Route>
         <Route path={AppRoute.FAVORITES} exact>
-          <FavoritesScreen places={places} />
+          <FavoritesScreen places={[]} />
         </Route>
         <Route path={AppRoute.ROOM} exact>
           <PlaceScreen />
@@ -36,7 +41,12 @@ function App(props) {
 }
 
 App.propTypes = {
-  places: PropTypes.arrayOf(placesItemProp),
+  isPlacesLoaded: PropsTypes.bool.isRequired,
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  isPlacesLoaded: state.isPlacesLoaded,
+});
+
+export {App};
+export default connect(mapStateToProps, null)(App);

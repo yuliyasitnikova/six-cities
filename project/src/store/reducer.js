@@ -1,26 +1,24 @@
 import {ActionType} from './actions';
-import {filterPlaces} from '../utils';
-import {CITIES} from '../const';
-import places from '../mocks/places';
-
-const defaultCity = CITIES[0];
+import {defaultCity} from '../const';
 
 const initialState = {
   city: defaultCity,
-  places: filterPlaces(places, defaultCity),
+  places: [],
+  isPlacesLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.FILL_PLACES:
+      return {
+        ...state,
+        places: action.payload,
+        isPlacesLoaded: true,
+      };
     case ActionType.CHANGE_CITY:
       return {
         ...state,
         city: action.payload,
-      };
-    case ActionType.FILL_PLACES:
-      return {
-        ...state,
-        places: filterPlaces(places, action.payload),
       };
     default:
       return state;
