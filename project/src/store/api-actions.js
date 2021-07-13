@@ -28,5 +28,5 @@ const adaptPlaceToClient = (place) => {
 export const getPlaces = () => (dispatch, _getState, api) => {
   api.get(APIRoute.HOTELS)
     .then(({data}) => data.map(adaptPlaceToClient))
-    .then((places) => dispatch(ActionCreator.loadPlaces(places)));
+    .then((places) => dispatch(ActionCreator.fillPlaces(places)));
 };

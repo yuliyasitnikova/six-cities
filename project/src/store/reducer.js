@@ -8,7 +8,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.LOAD_PLACES:
+    case ActionType.FILL_PLACES:
       return {
         ...state,
         places: action.payload,
