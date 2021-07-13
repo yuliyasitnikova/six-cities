@@ -6,7 +6,7 @@ const adaptPlaceToClient = (place) => {
     ...place,
     host: {
       ...place.host,
-      avatarUrl: place.host.avatar_url,
+      avatar: place.host.avatar_url,
       isPro: place.host.is_pro,
     },
     isFavorite: place.is_favorite,
