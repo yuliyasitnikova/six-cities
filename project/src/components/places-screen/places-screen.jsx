@@ -8,10 +8,11 @@ import Cities from '../cities/cities';
 import Places from '../places/places';
 import PlacesEmpty from '../places-empty/places-empty';
 import {CITIES} from '../../const';
-import {filterPlaces} from '../../utils';
 import placesItemProp from '../places-item/places-item.prop';
 
 function PlacesScreen({city, places, onChangeCity}) {
+  const filterPlaces = (placesArr, cityName) => placesArr.filter((place) => place.city.name === cityName);
+
   return (
     <div className="page page--gray page--main">
       <Header />
