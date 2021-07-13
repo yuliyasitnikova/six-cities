@@ -1,13 +1,22 @@
 import React from 'react';
+import PropsTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import LoadingScreen from '../loading-screen/loading-screen';
 import AuthScreen from '../auth-screen/auth-screen';
 import PlacesScreen from '../places-screen/places-screen';
 import PlaceScreen from '../place-screen/place-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
-function App() {
+function App({isPlacesLoaded}) {
+  if (!isPlacesLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Switch>
@@ -31,4 +40,13 @@ function App() {
   );
 }
 
-export default App;
+App.propTypes = {
+  isPlacesLoaded: PropsTypes.bool.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isPlacesLoaded: state.isPlacesLoaded,
+});
+
+export {App};
+export default connect(mapStateToProps, null)(App);

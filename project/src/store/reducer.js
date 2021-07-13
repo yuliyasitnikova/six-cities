@@ -4,6 +4,7 @@ import {defaultCity} from '../const';
 const initialState = {
   city: defaultCity,
   places: [],
+  isPlacesLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,6 +13,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         places: action.payload,
+        isPlacesLoaded: true,
       };
     case ActionType.CHANGE_CITY:
       return {
