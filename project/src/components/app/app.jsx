@@ -29,9 +29,7 @@ function App({isPlacesLoaded}) {
         <Route path={AppRoute.FAVORITES} exact>
           <FavoritesScreen places={[]} />
         </Route>
-        <Route path={AppRoute.ROOM} exact>
-          <PlaceScreen />
-        </Route>
+        <Route path={AppRoute.ROOM} exact component={PlaceScreen} />
         <Route>
           <NotFoundScreen />
         </Route>
