@@ -35,3 +35,9 @@ export const MAP_ICON_ACTIVE = {
   iconSize: [30, 30],
   iconAnchor: [15, 30],
 };
+
+
+export const PlacesListClassModifier = {
+  CITIES: 'cities__places-list',
+  NEAR_PLACES: 'near-places__list',
+};

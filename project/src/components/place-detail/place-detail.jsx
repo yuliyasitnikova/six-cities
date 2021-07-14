@@ -8,7 +8,7 @@ import {capitalize} from '../../utils';
 import placeDetailProp from './place-detail.prop';
 import placesItemProp from '../places-item/places-item.prop';
 
-function PlaceDetail({place, placesNear}) {
+function PlaceDetail({place, places}) {
   const {bedrooms, description, goods, host: {avatar: hostAvatar, name: hostName, isPro: hostIsPro}, images, isFavorite, isPremium, maxAdults, price, rating, title, type} = place;
   const ratingValue = `${20 * rating}%`;
 
@@ -96,14 +96,14 @@ function PlaceDetail({place, placesNear}) {
           </section>
         </div>
       </div>
-      <PlaceMap points={placesNear} />
+      <PlaceMap points={places} />
     </section>
   );
 }
 
 PlaceDetail.propTypes = {
   place: placeDetailProp,
-  placesNear: PropTypes.arrayOf(placesItemProp),
+  places: PropTypes.arrayOf(placesItemProp),
 };
 
 export default PlaceDetail;
