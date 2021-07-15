@@ -3,21 +3,25 @@ import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import {capitalize} from '../../utils';
 import placesItemProp from './places-item.prop';
 
-function PlacesItem({place, onHover}) {
+function PlacesItem({className = '', place, onMouseEnterCallback, onMouseLeaveCallback}) {
   const {id, isPremium, isFavorite, previewImage, price, title, type, rating} = place;
   const ratingValue = `${20 * rating}%`;
   const detailHref = AppRoute.ROOM.replace(':id', id);
 
-  const onItemHover = useCallback(() => {
-    onHover(id);
-  }, [id]);
+  const onMouseEnter = useCallback(() => onMouseEnterCallback(id), [id]);
+  const onMouseLeave = useCallback(() => onMouseLeaveCallback(), []);
 
   return (
-    <article className="cities__place-card place-card" onMouseEnter={onItemHover}>
+    <article
+      className={`place-card ${className}`}
+      onMouseEnter={onMouseEnterCallback ? onMouseEnter : undefined}
+      onMouseLeave={onMouseLeaveCallback ? onMouseLeave : undefined}
+    >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className="place-card__image-wrapper">
         <Link to={detailHref}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
         </Link>
@@ -44,15 +48,17 @@ function PlacesItem({place, onHover}) {
         <h2 className="place-card__name">
           <Link to={detailHref}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalize(type)}</p>
       </div>
     </article>
   );
 }
 
 PlacesItem.propTypes = {
+  className: PropTypes.string,
   place: placesItemProp,
-  onHover: PropTypes.func.isRequired,
+  onMouseEnterCallback: PropTypes.func,
+  onMouseLeaveCallback: PropTypes.func,
 };
 
 export default PlacesItem;

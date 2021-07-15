@@ -1,44 +1,36 @@
 import React, {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
-import leaflet from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap/useMap';
-import {MAP_ICON_DEFAULT, MAP_ICON_ACTIVE} from '../../const';
+import leaflet from 'leaflet';
+import {MAP_ICON_DEFAULT} from '../../const';
 
-function PlacesMap({points, activePoint}) {
+function PlaceMap({points}) {
   const mapRef = useRef(null);
   const city = points[0].city;
   const map = useMap(mapRef, city);
-  const markers = [];
 
   useEffect(() => {
     if (map) {
       points.forEach((point) => {
-        const {id, location: {latitude, longitude}} = point;
+        const {location: {latitude, longitude}} = point;
         const marker = leaflet.marker([latitude, longitude], {
-          icon: (id === activePoint.id)
-            ? leaflet.icon(MAP_ICON_ACTIVE)
-            : leaflet.icon(MAP_ICON_DEFAULT),
+          icon: leaflet.icon(MAP_ICON_DEFAULT),
         });
         marker.addTo(map);
-        markers.push(marker);
       });
-
-      return () => markers.forEach((marker) => marker.remove());
     }
-  }, [map, points, activePoint]);
+  }, [map, points]);
 
   return (
-    <section className="cities__map map">
-      <div style={{'height': '100%'}} ref={mapRef} />
+    <section className="property__map map">
+      <div style={{width: '1144px', 'height': '100%', 'margin': '0 auto'}} ref={mapRef} />
     </section>
   );
 }
 
-PlacesMap.propTypes = {
+PlaceMap.propTypes = {
   points: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
       city: PropTypes.shape({
         location: PropTypes.shape({
           latitude: PropTypes.number.isRequired,
@@ -48,9 +40,6 @@ PlacesMap.propTypes = {
       }).isRequired,
     }).isRequired,
   ),
-  activePoint: PropTypes.shape({
-    id: PropTypes.number,
-  }),
 };
 
-export default PlacesMap;
+export default PlaceMap;

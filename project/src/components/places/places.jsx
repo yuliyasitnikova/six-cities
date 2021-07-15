@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import {PlacesListClassModifier} from '../../const';
 import PlacesList from '../places-list/places-list';
 import PlacesMap from '../places-map/places-map';
 import placesItemProp from '../places-item/places-item.prop';
@@ -7,12 +8,12 @@ import placesItemProp from '../places-item/places-item.prop';
 function Places({city, places}) {
   const [activePoint, setActivePoint] = useState({});
 
-  const onItemHover = (placeId) => {
-    const activeItem = places.find((place) => (
-      place.id === placeId
-    ));
+  const onPlaceMouseEnter = (placeId) => {
+    const activeItem = places.find((place) => place.id === placeId);
     setActivePoint(activeItem);
   };
+
+  const onPlaceMouseLeave = () => setActivePoint({});
 
   return (
     <div className="cities__places-container container">
@@ -34,7 +35,7 @@ function Places({city, places}) {
             <li className="places__option" tabIndex="0">Top rated first</li>
           </ul>
         </form>
-        <PlacesList places={places} onItemHover={onItemHover} />
+        <PlacesList className={PlacesListClassModifier.CITIES} places={places} onMouseEnterCallback={onPlaceMouseEnter} onMouseLeaveCallback={onPlaceMouseLeave} />
       </section>
       <div className="cities__right-section">
         <PlacesMap points={places} activePoint={activePoint} />

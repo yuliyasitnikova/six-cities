@@ -1,1 +1,3 @@
-export const filterPlaces = (places, cityName) => places.filter((place) => place.city.name === cityName);
+export const capitalize = (string = '') => (
+  string[0].toUpperCase() + string.slice(1)
+);
