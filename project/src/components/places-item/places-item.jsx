@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
-import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {capitalize, getRatingWidth} from '../../utils';

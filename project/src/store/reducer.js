@@ -1,8 +1,9 @@
 import {ActionType} from './actions';
-import {defaultCity} from '../const';
+import {defaultCity,  SortType} from '../const';
 
 const initialState = {
   city: defaultCity,
+  sortType: SortType.DEFAULT,
   places: [],
   isPlacesLoaded: false,
 };
