@@ -1,32 +1,10 @@
-import React, {useEffect, useRef} from 'react';
-import PropTypes from 'prop-types';
-import leaflet from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+import React, {useRef} from 'react';
 import useMap from '../../hooks/useMap/useMap';
-import {MAP_ICON_DEFAULT, MAP_ICON_ACTIVE} from '../../const';
+import PropTypes from 'prop-types';
 
 function PlacesMap({points, activePoint}) {
   const mapRef = useRef(null);
-  const city = points[0].city;
-  const map = useMap(mapRef, city);
-  const markers = [];
-
-  useEffect(() => {
-    if (map) {
-      points.forEach((point) => {
-        const {id, location: {latitude, longitude}} = point;
-        const marker = leaflet.marker([latitude, longitude], {
-          icon: (id === activePoint.id)
-            ? leaflet.icon(MAP_ICON_ACTIVE)
-            : leaflet.icon(MAP_ICON_DEFAULT),
-        });
-        marker.addTo(map);
-        markers.push(marker);
-      });
-
-      return () => markers.forEach((marker) => marker.remove());
-    }
-  }, [map, points, activePoint]);
+  useMap(mapRef, points, activePoint);
 
   return (
     <section className="cities__map map">

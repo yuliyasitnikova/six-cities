@@ -1,10 +1,10 @@
 import React from 'react';
 import dayjs from 'dayjs';
+import {getRatingWidth} from '../../utils';
 import reviewsItemProp from './reviews-item.prop';
 
 function ReviewsItem({review}) {
   const {comment, date, rating, user: {avatar, name}} = review;
-  const ratingValue = `${20 * rating}%`;
 
   return (
     <li className="reviews__item">
@@ -17,7 +17,7 @@ function ReviewsItem({review}) {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: ratingValue}}/>
+            <span style={{width: getRatingWidth(rating)}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

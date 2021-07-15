@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import {connect} from 'react-redux';
@@ -11,7 +11,7 @@ import {CITIES} from '../../const';
 import placesItemProp from '../places-item/places-item.prop';
 
 function PlacesScreen({city, places, onChangeCity}) {
-  const filterPlaces = (placesArr, cityName) => placesArr.filter((place) => place.city.name === cityName);
+  const filteredPlaces = useMemo(() => places.filter((place) => place.city.name === city), [city, places]);
 
   return (
     <div className="page page--gray page--main">
@@ -24,7 +24,7 @@ function PlacesScreen({city, places, onChangeCity}) {
         <div className="cities">
           {
             places.length
-              ? <Places city={city} places={filterPlaces(places, city)} />
+              ? <Places city={city} places={filteredPlaces} />
               : <PlacesEmpty />
           }
         </div>

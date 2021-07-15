@@ -36,6 +36,7 @@ export const MAP_ICON_ACTIVE = {
   iconAnchor: [15, 30],
 };
 
+export const MAX_RATING_VALUE = 5;
 
 export const PlacesListClassModifier = {
   CITIES: 'cities__places-list',

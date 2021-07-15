@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Header from '../header/header';
@@ -14,6 +14,8 @@ function PlaceScreen(props) {
 
   const place = useMemo(() => places.find((placeItem) => placeItem.id === parseInt(placeId, 10)), [placeId]);
   const placesNear = places.slice(0, 3);
+
+  useEffect(()=> window.scrollTo(0, 0), [place]);
 
   return (
     <div className="page">

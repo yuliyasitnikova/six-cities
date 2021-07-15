@@ -4,13 +4,12 @@ import classNames from 'classnames/bind';
 import PlaceMap from '../place-map/place-map';
 import ReviewsList from '../reviews-list/reviews-list';
 import ReviewsForm from '../reviews-form/reviews-form';
-import {capitalize} from '../../utils';
+import {capitalize, getRatingWidth} from '../../utils';
 import placeDetailProp from './place-detail.prop';
 import placesItemProp from '../places-item/places-item.prop';
 
 function PlaceDetail({place, places}) {
   const {bedrooms, description, goods, host: {avatar: hostAvatar, name: hostName, isPro: hostIsPro}, images, isFavorite, isPremium, maxAdults, price, rating, title, type} = place;
-  const ratingValue = `${20 * rating}%`;
 
   const reviews = [{
     comment: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
@@ -27,14 +26,11 @@ function PlaceDetail({place, places}) {
     <section className="property">
       <div className="property__gallery-container container">
         <div className="property__gallery">
-          {images.slice(0, 6).map((image, id) => {
-            const key = `place-image-${id}`;
-            return (
-              <div key={key} data-key={key} className="property__image-wrapper">
-                <img className="property__image" src={image} alt="Photo studio"/>
-              </div>
-            );
-          })}
+          {images.slice(0, 6).map((image) => (
+            <div key={image} className="property__image-wrapper">
+              <img className="property__image" src={image} alt="Photo studio"/>
+            </div>
+          ))}
         </div>
       </div>
       <div className="property__container container">
@@ -51,7 +47,7 @@ function PlaceDetail({place, places}) {
           </div>
           <div className="property__rating rating">
             <div className="property__stars rating__stars">
-              <span style={{width: ratingValue}} />
+              <span style={{width: getRatingWidth(rating)}} />
               <span className="visually-hidden">Rating</span>
             </div>
             <span className="property__rating-value rating__value">{rating}</span>
@@ -68,12 +64,9 @@ function PlaceDetail({place, places}) {
           <div className="property__inside">
             <h2 className="property__inside-title">What&apos;s inside</h2>
             <ul className="property__inside-list">
-              {goods.map((good, id) => {
-                const key = `place-good-${id}`;
-                return (
-                  <li key={key} className="property__inside-item">{good}</li>
-                );
-              })}
+              {goods.map((good) => (
+                <li key={`place ${place.id} ${good}`} className="property__inside-item">{good}</li>
+              ))}
             </ul>
           </div>
           <div className="property__host">
