@@ -21,6 +21,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         city: action.payload,
       };
+    case ActionType.CHANGE_SORT:
+      return {
+        ...state,
+        sortType: action.payload,
+      };
     default:
       return state;
   }
