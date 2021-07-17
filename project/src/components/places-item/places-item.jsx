@@ -1,14 +1,13 @@
 import React, {useCallback} from 'react';
-import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
-import {capitalize} from '../../utils';
+import {capitalize, getRatingWidth} from '../../utils';
 import placesItemProp from './places-item.prop';
 
 function PlacesItem({className = '', place, onMouseEnterCallback, onMouseLeaveCallback}) {
   const {id, isPremium, isFavorite, previewImage, price, title, type, rating} = place;
-  const ratingValue = `${20 * rating}%`;
   const detailHref = AppRoute.ROOM.replace(':id', id);
 
   const onMouseEnter = useCallback(() => onMouseEnterCallback(id), [id]);
@@ -41,7 +40,7 @@ function PlacesItem({className = '', place, onMouseEnterCallback, onMouseLeaveCa
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: ratingValue}} />
+            <span style={{width: getRatingWidth(rating)}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

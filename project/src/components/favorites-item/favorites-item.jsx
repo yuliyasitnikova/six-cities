@@ -1,11 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import {capitalize, getRatingWidth} from '../../utils';
 import favoritesItemProp from './favorites-item.prop';
 
 function FavoritesItem({offer}) {
   const {id, previewImage, price, title, type, rating} = offer;
-  const ratingValue = `${20 * rating}%`;
   const detailHref = AppRoute.ROOM.replace(':id', id);
 
   return (
@@ -30,14 +30,14 @@ function FavoritesItem({offer}) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: ratingValue}} />
+            <span style={{width: getRatingWidth(rating)}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
           <Link to={detailHref}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalize(type)}</p>
       </div>
     </article>
   );

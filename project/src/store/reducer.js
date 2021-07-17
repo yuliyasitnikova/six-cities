@@ -1,8 +1,9 @@
 import {ActionType} from './actions';
-import {defaultCity} from '../const';
+import {defaultCity,  SortType} from '../const';
 
 const initialState = {
   city: defaultCity,
+  sortType: SortType.DEFAULT,
   places: [],
   isPlacesLoaded: false,
 };
@@ -19,6 +20,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         city: action.payload,
+      };
+    case ActionType.CHANGE_SORT:
+      return {
+        ...state,
+        sortType: action.payload,
       };
     default:
       return state;

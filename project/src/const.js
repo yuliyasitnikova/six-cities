@@ -36,8 +36,16 @@ export const MAP_ICON_ACTIVE = {
   iconAnchor: [15, 30],
 };
 
+export const MAX_RATING_VALUE = 5;
 
 export const PlacesListClassModifier = {
   CITIES: 'cities__places-list',
   NEAR_PLACES: 'near-places__list',
+};
+
+export const SortType = {
+  DEFAULT: 'Popular',
+  PRICE_TO_HIGH: 'Price: low to high',
+  PRICE_TO_LOW: 'Price: high to low',
+  RATING_TO_LOW: 'Top rated first',
 };

@@ -1,6 +1,6 @@
 import React from 'react';
-import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
 import {PlacesListClassModifier} from '../../const';
 import PlacesItem from '../places-item/places-item';
 import CitiesPlacesItem from '../places-item/cities-places-item';
