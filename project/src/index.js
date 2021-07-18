@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {reducer} from './store/reducer';
 import {createAPI} from './api';
-import {getPlaces} from './store/api-actions';
+import {checkAuth, getPlaces} from './store/api-actions';
 import App from './components/app/app';
 
 const api = createAPI();
@@ -18,6 +18,7 @@ const store = createStore(
   ),
 );
 
+store.dispatch(checkAuth());
 store.dispatch(getPlaces());
 
 ReactDOM.render(

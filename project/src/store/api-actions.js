@@ -1,5 +1,5 @@
 import {ActionCreator} from './actions';
-import {APIRoute} from '../const';
+import {APIRoute, AuthorizationStatus} from '../const';
 
 const adaptPlaceToClient = (place) => {
   const adaptPlace = {
@@ -25,8 +25,14 @@ const adaptPlaceToClient = (place) => {
   return adaptPlace;
 };
 
-export const getPlaces = () => (dispatch, _getState, api) => {
+export const checkAuth = () => (dispatch, _getState, api) => (
+  api.post(APIRoute.LOGIN)
+    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+    .catch(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
+);
+
+export const getPlaces = () => (dispatch, _getState, api) => (
   api.get(APIRoute.HOTELS)
     .then(({data}) => data.map(adaptPlaceToClient))
-    .then((places) => dispatch(ActionCreator.fillPlaces(places)));
-};
+    .then((places) => dispatch(ActionCreator.fillPlaces(places)))
+);

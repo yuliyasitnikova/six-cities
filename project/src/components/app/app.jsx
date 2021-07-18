@@ -10,8 +10,8 @@ import PlaceScreen from '../place-screen/place-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
-function App({isPlacesLoaded}) {
-  if (!isPlacesLoaded) {
+function App({isAuthChecked, isPlacesLoaded}) {
+  if (!isAuthChecked || !isPlacesLoaded) {
     return (
       <LoadingScreen />
     );
@@ -39,10 +39,12 @@ function App({isPlacesLoaded}) {
 }
 
 App.propTypes = {
+  isAuthChecked: PropsTypes.bool.isRequired,
   isPlacesLoaded: PropsTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  isAuthChecked: state.isAuthChecked,
   isPlacesLoaded: state.isPlacesLoaded,
 });
 
