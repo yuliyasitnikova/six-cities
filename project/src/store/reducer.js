@@ -3,6 +3,7 @@ import {AuthorizationStatus, defaultCity,  SortType} from '../const';
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
+  user: {},
   city: defaultCity,
   sortType: SortType.DEFAULT,
   places: [],
@@ -18,7 +19,18 @@ const reducer = (state = initialState, action) => {
         authorizationStatus: action.payload,
         isAuthChecked: true,
       };
-    case ActionType.FILL_PLACES:
+    case ActionType.LOGOUT:
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
+        user: {},
+      };
+    case ActionType.LOAD_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case ActionType.LOAD_PLACES:
       return {
         ...state,
         places: action.payload,

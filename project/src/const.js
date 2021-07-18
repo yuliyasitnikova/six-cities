@@ -5,6 +5,7 @@ export const API_URL = 'https://7.react.pages.academy/six-cities';
 export const APIRoute = {
   HOTELS: '/hotels',
   LOGIN: '/login',
+  LOGOUT: '/logout',
 };
 
 export const AppRoute = {

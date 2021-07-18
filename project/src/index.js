@@ -4,8 +4,9 @@ import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
-import {reducer} from './store/reducer';
 import {createAPI} from './api';
+import {reducer} from './store/reducer';
+import {redirect} from './store/middlewares/redirect';
 import {checkAuth, getPlaces} from './store/api-actions';
 import App from './components/app/app';
 
@@ -15,6 +16,7 @@ const store = createStore(
   reducer,
   composeWithDevTools(
     applyMiddleware(thunk.withExtraArgument(api)),
+    applyMiddleware(redirect),
   ),
 );
 
