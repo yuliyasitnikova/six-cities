@@ -1,7 +1,8 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Router as BrowserRouter, Route, Switch} from 'react-router-dom';
+import browserHistory from '../../browser-history';
 import {AppRoute} from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
 import AuthScreen from '../auth-screen/auth-screen';
@@ -19,7 +20,7 @@ function App({isAuthChecked, isPlacesLoaded}) {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route path={AppRoute.MAIN} exact>
           <PlacesScreen />
