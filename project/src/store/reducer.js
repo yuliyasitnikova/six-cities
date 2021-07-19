@@ -1,16 +1,36 @@
 import {ActionType} from './actions';
-import {defaultCity,  SortType} from '../const';
+import {AuthorizationStatus, defaultCity,  SortType} from '../const';
 
 const initialState = {
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
+  user: {},
   city: defaultCity,
   sortType: SortType.DEFAULT,
   places: [],
+  isAuthChecked: false,
   isPlacesLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.FILL_PLACES:
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+        isAuthChecked: true,
+      };
+    case ActionType.LOGOUT:
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
+        user: {},
+      };
+    case ActionType.LOAD_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case ActionType.LOAD_PLACES:
       return {
         ...state,
         places: action.payload,

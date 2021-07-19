@@ -1,13 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import Header from '../header/header';
 import Favorites from '../favorites/favorites';
 import FavoritesEmpty from '../favorites-empty/favorites-empty';
 import Footer from '../footer/footer';
-import favoritesItemProp from '../favorites-item/favorites-item.prop';
 
-function FavoritesScreen({places}) {
+function FavoritesScreen() {
+  const places = [];
+
   return (
     <div className={classNames('page', {'page--favorites-empty': !places.length})}>
       <Header />
@@ -24,9 +24,5 @@ function FavoritesScreen({places}) {
     </div>
   );
 }
-
-FavoritesScreen.propTypes = {
-  places: PropTypes.arrayOf(favoritesItemProp),
-};
 
 export default FavoritesScreen;

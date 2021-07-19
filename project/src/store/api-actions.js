@@ -1,32 +1,34 @@
 import {ActionCreator} from './actions';
-import {APIRoute} from '../const';
+import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
+import {adaptPlaceToClient, adaptUserToClient} from '../adapter';
 
-const adaptPlaceToClient = (place) => {
-  const adaptPlace = {
-    ...place,
-    host: {
-      ...place.host,
-      avatar: place.host.avatar_url,
-      isPro: place.host.is_pro,
-    },
-    isFavorite: place.is_favorite,
-    isPremium: place.is_premium,
-    maxAdults: place.max_adults,
-    previewImage: place.preview_image,
-  };
+export const checkAuth = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.LOGIN)
+    .then(({data}) => adaptUserToClient(data))
+    .then((user) => dispatch(ActionCreator.loadUser(user)))
+    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+    .catch(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
+);
 
-  delete adaptPlace.host.avatar_url;
-  delete adaptPlace.host.is_pro;
-  delete adaptPlace.is_favorite;
-  delete adaptPlace.is_premium;
-  delete adaptPlace.max_adults;
-  delete adaptPlace.preview_image;
+export const login = ({login: email, password}) => (dispatch, _getState, api) => (
+  api.post(APIRoute.LOGIN, {email, password})
+    .then(({data}) => {
+      localStorage.setItem('token', data.token);
+      return adaptUserToClient(data);
+    })
+    .then((user) => dispatch(ActionCreator.loadUser(user)))
+    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.MAIN)))
+);
 
-  return adaptPlace;
-};
+export const logout = () => (dispatch, _getState, api) => (
+  api.delete(APIRoute.LOGOUT)
+    .then(() => localStorage.removeItem('token'))
+    .then(() => dispatch(ActionCreator.logout()))
+);
 
-export const getPlaces = () => (dispatch, _getState, api) => {
+export const getPlaces = () => (dispatch, _getState, api) => (
   api.get(APIRoute.HOTELS)
     .then(({data}) => data.map(adaptPlaceToClient))
-    .then((places) => dispatch(ActionCreator.fillPlaces(places)));
-};
+    .then((places) => dispatch(ActionCreator.loadPlaces(places)))
+);
