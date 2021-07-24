@@ -3,6 +3,7 @@ export const ActionType = {
   LOGOUT: 'LOGOUT',
   LOAD_USER: 'LOAD_USER',
   LOAD_PLACES: 'LOAD_PLACES',
+  LOAD_PLACE_DATA: 'LOAD_PLACE_DATA',
   CHANGE_CITY: 'CHANGE_CITY',
   CHANGE_SORT: 'CHANGE_SORT',
   REDIRECT_TO_ROUTE: 'REDIRECT_TO_ROUTE',
@@ -23,6 +24,10 @@ export const ActionCreator = {
   loadPlaces: (places) => ({
     type: ActionType.LOAD_PLACES,
     payload: places,
+  }),
+  loadPlaceData: (data) => ({
+    type: ActionType.LOAD_PLACE_DATA,
+    payload: data,
   }),
   changeCity: (city) => ({
     type: ActionType.CHANGE_CITY,

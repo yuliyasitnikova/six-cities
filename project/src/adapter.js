@@ -22,6 +22,22 @@ export const adaptPlaceToClient = (place) => {
   return adaptPlace;
 };
 
+export const adaptReviewToClient = (review) => {
+  const adaptReview = {
+    ...review,
+    user: {
+      ...review.user,
+      avatar: review.user.avatar_url,
+      isPro: review.user.is_pro,
+    },
+  };
+
+  delete adaptReview.user.avatar_url;
+  delete adaptReview.user.is_pro;
+
+  return adaptReview;
+};
+
 export const adaptUserToClient = (user) => {
   const adaptUser = {
     ...user,

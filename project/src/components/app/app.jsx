@@ -45,7 +45,7 @@ App.propTypes = {
 
 const mapStateToProps = (state) => ({
   isAuthChecked: state.isAuthChecked,
-  isPlacesLoaded: state.isPlacesLoaded,
+  isPlacesLoaded: state.places.isLoaded,
 });
 
 export {App};

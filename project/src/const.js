@@ -3,9 +3,12 @@ export const REQUEST_TIMEOUT = 5000;
 export const API_URL = 'https://7.react.pages.academy/six-cities';
 
 export const APIRoute = {
-  HOTELS: '/hotels',
   LOGIN: '/login',
   LOGOUT: '/logout',
+  PLACES: '/hotels',
+  PLACE: '/hotels/:id',
+  NEARBY: '/hotels/:place_id/nearby',
+  REVIEWS: '/comments/:place_id',
 };
 
 export const AppRoute = {

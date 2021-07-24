@@ -6,9 +6,18 @@ const initialState = {
   user: {},
   city: defaultCity,
   sortType: SortType.DEFAULT,
-  places: [],
+  places: {
+    list: [],
+    isLoaded: false,
+  },
+  place: {
+    properties: {},
+    nearby: [],
+    reviews: [],
+    isLoaded: false,
+  },
   isAuthChecked: false,
-  isPlacesLoaded: false,
+
 };
 
 const reducer = (state = initialState, action) => {
@@ -33,8 +42,20 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_PLACES:
       return {
         ...state,
-        places: action.payload,
-        isPlacesLoaded: true,
+        places: {
+          list: action.payload,
+          isLoaded: true,
+        },
+      };
+    case ActionType.LOAD_PLACE_DATA:
+      return {
+        ...state,
+        place: {
+          properties: action.payload.properties,
+          nearby: action.payload.nearby,
+          reviews: action.payload.reviews,
+          isLoaded: true,
+        },
       };
     case ActionType.CHANGE_CITY:
       return {

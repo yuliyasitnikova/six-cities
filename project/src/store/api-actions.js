@@ -1,6 +1,6 @@
 import {ActionCreator} from './actions';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
-import {adaptPlaceToClient, adaptUserToClient} from '../adapter';
+import {adaptPlaceToClient, adaptReviewToClient, adaptUserToClient} from '../adapter';
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
@@ -27,8 +27,26 @@ export const logout = () => (dispatch, _getState, api) => (
     .then(() => dispatch(ActionCreator.logout()))
 );
 
-export const getPlaces = () => (dispatch, _getState, api) => (
-  api.get(APIRoute.HOTELS)
+export const fetchPlaces = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.PLACES)
     .then(({data}) => data.map(adaptPlaceToClient))
     .then((places) => dispatch(ActionCreator.loadPlaces(places)))
 );
+
+export const fetchPlace = (id) => (dispatch, _getState, api) => (
+  Promise
+    .all([
+      api.get(APIRoute.PLACE.replace(':id', id)),
+      api.get(APIRoute.NEARBY.replace(':place_id', id)),
+      api.get(APIRoute.REVIEWS.replace(':place_id', id)),
+    ])
+    .then(([{data: place}, {data: nearby}, {data: reviews}]) => {
+      const data = {
+        properties: adaptPlaceToClient(place),
+        nearby: nearby.map(adaptPlaceToClient),
+        reviews: reviews.map(adaptReviewToClient),
+      };
+      dispatch(ActionCreator.loadPlaceData(data));
+    })
+);
+
