@@ -60,3 +60,7 @@ export const SortType = {
   PRICE_TO_LOW: 'Price: high to low',
   RATING_TO_LOW: 'Top rated first',
 };
+
+export const COMMENT_MIN_LENGTH = 50;
+
+export const COMMENT_MAX_LENGTH = 300;
