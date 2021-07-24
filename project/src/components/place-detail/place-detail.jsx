@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import PlaceMap from '../place-map/place-map';
-import ReviewsList from '../reviews-list/reviews-list';
-import ReviewsForm from '../reviews-form/reviews-form';
 import {capitalize, getRatingWidth} from '../../utils';
+import Reviews from '../reviews/reviews';
+import PlaceMap from '../place-map/place-map';
 import PlacesNear from '../places-near/places-near';
 import placeDetailProp from './place-detail.prop';
 import placesItemProp from '../places-item/places-item.prop';
@@ -75,11 +74,7 @@ function PlaceDetail({place}) {
                 <p className="property__text">{description}</p>
               </div>
             </div>
-            <section className="property__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-              <ReviewsList reviews={reviews} />
-              <ReviewsForm />
-            </section>
+            <Reviews reviews={reviews} />
           </div>
         </div>
         <PlaceMap points={nearby} />
