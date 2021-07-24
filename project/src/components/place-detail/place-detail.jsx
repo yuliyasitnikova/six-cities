@@ -10,8 +10,8 @@ import placesItemProp from '../places-item/places-item.prop';
 import reviewsItemProp from '../reviews-item/reviews-item.prop';
 
 function PlaceDetail({place}) {
-  const {properties, nearby, reviews} = place;
-  const {bedrooms, description, goods, host: {avatar: hostAvatar, name: hostName, isPro: hostIsPro}, id, images, isFavorite, isPremium, maxAdults, price, rating, title, type} = properties;
+  const {properties: currentPlace, nearby, reviews} = place;
+  const {bedrooms, description, goods, host: {avatar: hostAvatar, name: hostName, isPro: hostIsPro}, id, images, isFavorite, isPremium, maxAdults, price, rating, title, type} = currentPlace;
 
   return (
     <>
@@ -74,10 +74,10 @@ function PlaceDetail({place}) {
                 <p className="property__text">{description}</p>
               </div>
             </div>
-            <Reviews reviews={reviews} />
+            <Reviews reviews={reviews} place={place.properties.id} />
           </div>
         </div>
-        <PlaceMap points={nearby} />
+        <PlaceMap points={[...nearby, currentPlace]} activePoint={currentPlace} />
       </section>
       <div className="container">
         <PlacesNear places={nearby} />

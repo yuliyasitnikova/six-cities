@@ -27,7 +27,7 @@ PlacesMap.propTypes = {
     }).isRequired,
   ),
   activePoint: PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.number.isRequired,
   }),
 };
 
