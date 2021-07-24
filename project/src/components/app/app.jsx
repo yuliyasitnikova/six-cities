@@ -28,8 +28,16 @@ function App({isAuthChecked, isPlacesLoaded}) {
         <Route path={AppRoute.LOGIN} exact>
           <AuthScreen />
         </Route>
-        <PrivateRoute path={AppRoute.FAVORITES} exact render={() => <FavoritesScreen />} />
-        <Route path={AppRoute.ROOM} exact component={PlaceScreen} />
+        <PrivateRoute
+          path={AppRoute.FAVORITES}
+          exact
+          render={() => <FavoritesScreen />}
+        />
+        <Route
+          path={AppRoute.ROOM}
+          exact
+          render={({match}) => <PlaceScreen id={parseInt(match.params.id, 10)} />}
+        />
         <Route>
           <NotFoundScreen />
         </Route>
