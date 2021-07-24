@@ -57,6 +57,16 @@ const reducer = (state = initialState, action) => {
           isLoaded: true,
         },
       };
+    case ActionType.CLEAR_PLACE_DATA:
+      return {
+        ...state,
+        place: {
+          properties: {},
+          nearby: [],
+          reviews: [],
+          isLoaded: false,
+        },
+      };
     case ActionType.CHANGE_CITY:
       return {
         ...state,
