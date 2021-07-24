@@ -50,3 +50,17 @@ export const fetchPlace = (id) => (dispatch, _getState, api) => (
     })
 );
 
+export const postReview = (place, {comment, rating}) => (dispatch, _getState, api) => {
+  dispatch(ActionCreator.disableReviewForm());
+
+  return api.post(APIRoute.REVIEWS.replace(':place_id', place), {comment, rating})
+    .then(({data}) => {
+      const reviews = data.map(adaptReviewToClient);
+      dispatch(ActionCreator.loadReviews(reviews));
+      dispatch(ActionCreator.resetReviewForm());
+    })
+    .catch(() => {
+      //todo: showError
+      dispatch(ActionCreator.enableReviewForm());
+    });
+};

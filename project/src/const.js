@@ -61,6 +61,12 @@ export const SortType = {
   RATING_TO_LOW: 'Top rated first',
 };
 
+export const ReviewSendStatus = {
+  DEFAULT: 'DEFAULT',
+  POSTING: 'POSTING',
+  SUCCESS: 'SUCCESS',
+};
+
 export const COMMENT_MIN_LENGTH = 50;
 
 export const COMMENT_MAX_LENGTH = 300;
