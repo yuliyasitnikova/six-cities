@@ -41,7 +41,7 @@ PlacesScreen.propTypes = {
 
 const mapStateToProps = (state) => ({
   city: state.city,
-  places: state.places,
+  places: state.places.list,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -2,9 +2,9 @@ import React, {useRef} from 'react';
 import useMap from '../../hooks/useMap/useMap';
 import PropTypes from 'prop-types';
 
-function PlaceMap({points}) {
+function PlaceMap({points, activePoint}) {
   const mapRef = useRef(null);
-  useMap(mapRef, points, null);
+  useMap(mapRef, points, activePoint);
 
   return (
     <section className="property__map map">
@@ -26,6 +26,9 @@ PlaceMap.propTypes = {
       }).isRequired,
     }).isRequired,
   ),
+  activePoint: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+  }),
 };
 
 export default PlaceMap;

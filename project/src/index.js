@@ -7,7 +7,7 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import {createAPI} from './api';
 import {reducer} from './store/reducer';
 import {redirect} from './store/middlewares/redirect';
-import {checkAuth, getPlaces} from './store/api-actions';
+import {checkAuth, fetchPlaces} from './store/api-actions';
 import App from './components/app/app';
 
 const api = createAPI();
@@ -21,7 +21,7 @@ const store = createStore(
 );
 
 store.dispatch(checkAuth());
-store.dispatch(getPlaces());
+store.dispatch(fetchPlaces());
 
 ReactDOM.render(
   <React.StrictMode>

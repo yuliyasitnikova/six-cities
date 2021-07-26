@@ -3,9 +3,12 @@ export const REQUEST_TIMEOUT = 5000;
 export const API_URL = 'https://7.react.pages.academy/six-cities';
 
 export const APIRoute = {
-  HOTELS: '/hotels',
   LOGIN: '/login',
   LOGOUT: '/logout',
+  PLACES: '/hotels',
+  PLACE: '/hotels/:id',
+  NEARBY: '/hotels/:place_id/nearby',
+  REVIEWS: '/comments/:place_id',
 };
 
 export const AppRoute = {
@@ -57,3 +60,13 @@ export const SortType = {
   PRICE_TO_LOW: 'Price: high to low',
   RATING_TO_LOW: 'Top rated first',
 };
+
+export const ReviewSendStatus = {
+  DEFAULT: 'DEFAULT',
+  POSTING: 'POSTING',
+  SUCCESS: 'SUCCESS',
+};
+
+export const COMMENT_MIN_LENGTH = 50;
+
+export const COMMENT_MAX_LENGTH = 300;

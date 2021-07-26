@@ -40,7 +40,7 @@ function useMap(mapRef, points, activePoint) {
       points.forEach((point) => {
         const {id, location: {latitude, longitude}} = point;
         const marker = leaflet.marker([latitude, longitude], {
-          icon: (activePoint !== null && activePoint.id === id)
+          icon: (activePoint.id === id)
             ? leaflet.icon(MAP_ICON_ACTIVE)
             : leaflet.icon(MAP_ICON_DEFAULT),
         });
@@ -52,7 +52,6 @@ function useMap(mapRef, points, activePoint) {
     }
   }, [map, points, activePoint]);
 
-  return map;
 }
 
 export default useMap;

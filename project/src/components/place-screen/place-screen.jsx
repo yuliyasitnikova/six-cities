@@ -1,47 +1,59 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {ActionCreator} from '../../store/actions';
+import {fetchPlace} from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
 import Header from '../header/header';
 import PlaceDetail from '../place-detail/place-detail';
-import PlacesNear from '../places-near/places-near';
 import placeDetailProp from '../place-detail/place-detail.prop';
+import placesItemProp from '../places-item/places-item.prop';
+import reviewsItemProp from '../reviews-item/reviews-item.prop';
 
-function PlaceScreen(props) {
-  const {
-    places,
-    match: {params: {id: placeId}},
-  } = props;
+function PlaceScreen({id, place, getPlace}) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    getPlace(id);
+  }, [id]);
 
-  const place = useMemo(() => places.find((placeItem) => placeItem.id === parseInt(placeId, 10)), [placeId]);
-  const placesNear = places.slice(0, 3);
 
-  useEffect(()=> window.scrollTo(0, 0), [place]);
+  if (!place.isLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <div className="page">
       <Header />
       <main className="page__main page__main--property">
-        <PlaceDetail place={place} places={placesNear} />
-        <div className="container">
-          <PlacesNear places={placesNear} />
-        </div>
+        <PlaceDetail place={place} />
       </main>
     </div>
   );
 }
 
 PlaceScreen.propTypes = {
-  places: PropTypes.arrayOf(placeDetailProp),
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }).isRequired,
+  id: PropTypes.number.isRequired,
+  place: PropTypes.shape({
+    properties: placeDetailProp,
+    nearby: PropTypes.arrayOf(placesItemProp),
+    reviews: PropTypes.arrayOf(reviewsItemProp),
+    isLoaded: PropTypes.bool.isRequired,
   }).isRequired,
+  getPlace: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  places: state.places,
+  place: state.place,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getPlace: (id) => {
+    dispatch(ActionCreator.clearPlaceData());
+    dispatch(fetchPlace(id));
+  },
 });
 
 export {PlaceScreen};
-export default connect(mapStateToProps, null)(PlaceScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceScreen);

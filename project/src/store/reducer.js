@@ -1,14 +1,24 @@
 import {ActionType} from './actions';
-import {AuthorizationStatus, defaultCity,  SortType} from '../const';
+import {AuthorizationStatus, defaultCity,  SortType, ReviewSendStatus} from '../const';
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   user: {},
   city: defaultCity,
   sortType: SortType.DEFAULT,
-  places: [],
+  places: {
+    list: [],
+    isLoaded: false,
+  },
+  place: {
+    properties: {},
+    nearby: [],
+    reviews: [],
+    isLoaded: false,
+  },
+  reviewSendStatus: ReviewSendStatus.DEFAULT,
   isAuthChecked: false,
-  isPlacesLoaded: false,
+
 };
 
 const reducer = (state = initialState, action) => {
@@ -33,8 +43,53 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_PLACES:
       return {
         ...state,
-        places: action.payload,
-        isPlacesLoaded: true,
+        places: {
+          list: action.payload,
+          isLoaded: true,
+        },
+      };
+    case ActionType.LOAD_PLACE_DATA:
+      return {
+        ...state,
+        place: {
+          properties: action.payload.properties,
+          nearby: action.payload.nearby,
+          reviews: action.payload.reviews,
+          isLoaded: true,
+        },
+      };
+    case ActionType.CLEAR_PLACE_DATA:
+      return {
+        ...state,
+        place: {
+          properties: {},
+          nearby: [],
+          reviews: [],
+          isLoaded: false,
+        },
+      };
+    case ActionType.DISABLE_REVIEW_FORM:
+      return {
+        ...state,
+        reviewSendStatus: ReviewSendStatus.POSTING,
+      };
+    case ActionType.ENABLE_REVIEW_FORM:
+      return {
+        ...state,
+        reviewSendStatus: ReviewSendStatus.DEFAULT,
+      };
+    case ActionType.RESET_REVIEW_FORM:
+      return {
+        ...state,
+        reviewSendStatus: ReviewSendStatus.SUCCESS,
+      };
+    case ActionType.LOAD_REVIEWS:
+      return {
+        ...state,
+        place: {
+          ...state.place,
+          reviews: action.payload,
+        },
       };
     case ActionType.CHANGE_CITY:
       return {
