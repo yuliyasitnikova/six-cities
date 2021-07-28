@@ -1,77 +1,61 @@
+import {createAction} from '@reduxjs/toolkit';
+
 export const ActionType = {
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
 
-  LOAD_USER: 'data/load_user',
+  LOAD_USER: 'data/loadUser',
   LOAD_PLACES: 'data/loadPlaces',
   LOAD_PLACE: 'data/loadPlace',
   CLEAR_PLACE: 'data/clearPlace',
   LOAD_REVIEWS: 'data/loadReviews',
 
-  CHANGE_CITY: 'ui/change_city',
-  CHANGE_SORT: 'ui/change_sort',
-  DISABLE_REVIEW_FORM: 'ui/disable_review_form',
-  ENABLE_REVIEW_FORM: 'ui/enable_review_form',
-  RESET_REVIEW_FORM: 'ui/reset_review_form',
-  REDIRECT_TO_ROUTE: 'ui/redirect_to_route',
+  CHANGE_CITY: 'ui/changeCity',
+  CHANGE_SORT: 'ui/changeSort',
+  DISABLE_REVIEW_FORM: 'ui/disableReviewForm',
+  ENABLE_REVIEW_FORM: 'ui/enableReviewForm',
+  RESET_REVIEW_FORM: 'ui/resetReviewForm',
+  REDIRECT_TO_ROUTE: 'ui/redirectToRoute',
 };
 
-export const requireAuthorization = (status) => ({
-  type: ActionType.REQUIRED_AUTHORIZATION,
+export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
   payload: status,
-});
+}));
 
-export const logout = () => ({
-  type: ActionType.LOGOUT,
-});
+export const logout = createAction(ActionType.LOGOUT);
 
-export const loadUser = (user) => ({
-  type: ActionType.LOAD_USER,
+export const loadUser = createAction(ActionType.LOAD_USER, (user) => ({
   payload: user,
-});
+}));
 
-export const loadPlaces = (places) => ({
-  type: ActionType.LOAD_PLACES,
+export const loadPlaces = createAction(ActionType.LOAD_PLACES, (places) => ({
   payload: places,
-});
+}));
 
-export const loadPlace = (data) => ({
-  type: ActionType.LOAD_PLACE,
+export const loadPlace = createAction(ActionType.LOAD_PLACE, (data) => ({
   payload: data,
-});
+}));
 
-export const clearPlace = () => ({
-  type: ActionType.CLEAR_PLACE,
-});
+export const clearPlace = createAction(ActionType.CLEAR_PLACE);
 
-export const loadReviews = (reviews) => ({
-  type: ActionType.LOAD_REVIEWS,
+export const loadReviews = createAction(ActionType.LOAD_REVIEWS, (reviews) => ({
   payload: reviews,
-});
+}));
 
-export const changeCity = (city) => ({
-  type: ActionType.CHANGE_CITY,
+export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => ({
   payload: city,
-});
+}));
 
-export const changeSort = (type) => ({
-  type: ActionType.CHANGE_SORT,
+export const changeSort = createAction(ActionType.CHANGE_SORT, (type) => ({
   payload: type,
-});
+}));
 
-export const disableReviewForm = () => ({
-  type: ActionType.DISABLE_REVIEW_FORM,
-});
+export const disableReviewForm = createAction(ActionType.DISABLE_REVIEW_FORM);
 
-export const enableReviewForm = () => ({
-  type: ActionType.ENABLE_REVIEW_FORM,
-});
+export const enableReviewForm = createAction(ActionType.ENABLE_REVIEW_FORM);
 
-export const resetReviewForm = () => ({
-  type: ActionType.RESET_REVIEW_FORM,
-});
+export const resetReviewForm = createAction(ActionType.RESET_REVIEW_FORM);
 
-export const redirectToRoute = (url) => ({
-  type: ActionType.REDIRECT_TO_ROUTE,
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
   payload: url,
-});
+}));
