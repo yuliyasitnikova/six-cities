@@ -5,6 +5,7 @@ import {ActionCreator} from '../../store/actions';
 import {fetchPlace} from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Header from '../header/header';
+import Main from '../main/main';
 import PlaceDetail from '../place-detail/place-detail';
 import placeDetailProp from '../place-detail/place-detail.prop';
 import placesItemProp from '../places-item/places-item.prop';
@@ -26,9 +27,9 @@ function PlaceScreen({id, place, getPlace}) {
   return (
     <div className="page">
       <Header />
-      <main className="page__main page__main--property">
+      <Main className="page__main page__main--property">
         <PlaceDetail place={place} />
-      </main>
+      </Main>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import {PlacesListClassModifier} from '../../const';
@@ -10,7 +10,7 @@ import placesItemProp from '../places-item/places-item.prop';
 const getComponentByClassName = (className, place, props) => {
   switch (className) {
     case PlacesListClassModifier.CITIES:
-      return <CitiesPlacesItem key={`cities-places-item-${place.id}`} place={place} onMouseEnterCallback={props.onMouseEnterCallback} onMouseLeaveCallback={props.onMouseLeaveCallback} />;
+      return <CitiesPlacesItem key={`cities-places-item-${place.id}`} place={place} onMouseEnter={props.onPlaceMouseEnter} onMouseLeave={props.onPlaceMouseLeave} />;
     case PlacesListClassModifier.NEAR_PLACES:
       return <NearPlacesItem key={`near-places-item-${place.id}`} place={place} />;
     default:
@@ -18,10 +18,10 @@ const getComponentByClassName = (className, place, props) => {
   }
 };
 
-function PlacesList({className = '', places, ...otherProps}) {
+function PlacesList({className = '', places, ...restProps}) {
   return (
     <div className={classNames(className, 'places__list', {'tabs__content': className === PlacesListClassModifier.CITIES})}>
-      {places.map((place) => getComponentByClassName(className, place, {...otherProps}))}
+      {places.map((place) => getComponentByClassName(className, place, {...restProps}))}
     </div>
   );
 }
@@ -29,8 +29,9 @@ function PlacesList({className = '', places, ...otherProps}) {
 PlacesList.propTypes = {
   className: PropTypes.string,
   places: PropTypes.arrayOf(placesItemProp),
-  onMouseEnterCallback: PropTypes.func,
-  onMouseLeaveCallback: PropTypes.func,
+  onPlaceMouseEnter: PropTypes.func,
+  onPlaceMouseLeave: PropTypes.func,
 };
 
-export default PlacesList;
+export {PlacesList};
+export default memo(PlacesList);

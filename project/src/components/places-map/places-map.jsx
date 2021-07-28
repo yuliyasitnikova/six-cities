@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {memo, useRef} from 'react';
 import useMap from '../../hooks/useMap/useMap';
 import PropTypes from 'prop-types';
 
@@ -26,9 +26,8 @@ PlacesMap.propTypes = {
       }).isRequired,
     }).isRequired,
   ),
-  activePoint: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-  }),
+  activePoint: PropTypes.number,
 };
 
-export default PlacesMap;
+export {PlacesMap};
+export default memo(PlacesMap);

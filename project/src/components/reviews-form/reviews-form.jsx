@@ -18,22 +18,11 @@ function ReviewsForm({place, reviewSendStatus, onSubmit}) {
 
   const isReviewPosting = reviewSendStatus === ReviewSendStatus.POSTING;
   const isReviewAdding = reviewSendStatus === ReviewSendStatus.SUCCESS;
-
   const isButtonDisabled = rating === null || comment.length < COMMENT_MIN_LENGTH || isReviewPosting;
-
-  useEffect(() => {
-    setComment('');
-    setRating(null);
-  }, [isReviewAdding]);
 
   const handleRatingChange = ({target}) => setRating(Number(target.value));
 
-  const handleCommentChange = ({target}) => {
-    const value = target.value;
-    if (value.length <= COMMENT_MAX_LENGTH) {
-      setComment(value);
-    }
-  };
+  const handleCommentChange = ({target}) => setComment(target.value);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -43,6 +32,11 @@ function ReviewsForm({place, reviewSendStatus, onSubmit}) {
     };
     onSubmit(place, data);
   };
+
+  useEffect(() => {
+    setComment('');
+    setRating(null);
+  }, [isReviewAdding]);
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
@@ -61,7 +55,7 @@ function ReviewsForm({place, reviewSendStatus, onSubmit}) {
         ))}
       </div>
 
-      <textarea className="reviews__textarea form__textarea" id="review" name="review" value={comment} placeholder="Tell how was your stay, what you like and what can be improved" disabled={isReviewPosting} onChange={handleCommentChange} />
+      <textarea className="reviews__textarea form__textarea" id="review" name="review" value={comment} maxLength={COMMENT_MAX_LENGTH} placeholder="Tell how was your stay, what you like and what can be improved" disabled={isReviewPosting} onChange={handleCommentChange} />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay

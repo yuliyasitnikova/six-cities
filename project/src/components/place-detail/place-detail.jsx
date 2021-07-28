@@ -57,7 +57,7 @@ function PlaceDetail({place}) {
               <h2 className="property__inside-title">What&apos;s inside</h2>
               <ul className="property__inside-list">
                 {goods.map((good) => (
-                  <li key={`place ${id} ${good}`} className="property__inside-item">{good}</li>
+                  <li key={good} className="property__inside-item">{good}</li>
                 ))}
               </ul>
             </div>
@@ -77,7 +77,7 @@ function PlaceDetail({place}) {
             <Reviews reviews={reviews} place={place.properties.id} />
           </div>
         </div>
-        <PlaceMap points={[...nearby, currentPlace]} activePoint={currentPlace} />
+        <PlaceMap points={[...nearby, currentPlace]} activePoint={id} />
       </section>
       <div className="container">
         <PlacesNear places={nearby} />
