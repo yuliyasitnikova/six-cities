@@ -33,7 +33,7 @@ const data = createReducer(initialState, (builder) => {
       };
     })
     .addCase(loadReviews, (state, action) => {
-      state.places.reviews = action.payload.reviews;
+      state.place.reviews = action.payload;
     })
     .addCase(clearPlace, (state) => {
       state.place = {

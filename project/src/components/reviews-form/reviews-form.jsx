@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {getReviewSendStatus} from '../../store/ui/selectors';
 import {postReview} from '../../store/api-actions';
 import {ReviewSendStatus, COMMENT_MIN_LENGTH, COMMENT_MAX_LENGTH} from '../../const';
@@ -13,9 +13,12 @@ const ratingValues = [
   {value: 1, title: 'terribly'},
 ];
 
-function ReviewsForm({place, reviewSendStatus, onSubmit}) {
+function ReviewsForm({place}) {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(null);
+
+  const reviewSendStatus = useSelector(getReviewSendStatus);
+  const dispatch = useDispatch();
 
   const isReviewPosting = reviewSendStatus === ReviewSendStatus.POSTING;
   const isReviewAdding = reviewSendStatus === ReviewSendStatus.SUCCESS;
@@ -27,11 +30,10 @@ function ReviewsForm({place, reviewSendStatus, onSubmit}) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    const data = {
+    dispatch(postReview(place, {
       comment,
       rating,
-    };
-    onSubmit(place, data);
+    }));
   };
 
   useEffect(() => {
@@ -70,19 +72,6 @@ function ReviewsForm({place, reviewSendStatus, onSubmit}) {
 
 ReviewsForm.propTypes = {
   place: PropTypes.number.isRequired,
-  reviewSendStatus: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  reviewSendStatus: getReviewSendStatus(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (place, data) => {
-    dispatch(postReview(place, data));
-  },
-});
-
-export {ReviewsForm};
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewsForm);
+export default ReviewsForm;

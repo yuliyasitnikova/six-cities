@@ -1,20 +1,32 @@
 import React, {useMemo} from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {connect} from 'react-redux';
-import {getPlaces} from '../../store/data/selectors';
+import {useSelector, useDispatch} from 'react-redux';
+import {getPlaces, getLoadedPlacesStatus} from '../../store/data/selectors';
 import {getCity} from '../../store/ui/selectors';
 import {changeCity} from '../../store/actions';
+import {CITIES} from '../../const';
+import LoadingScreen from '../loading-screen/loading-screen';
 import Header from '../header/header';
 import Main from '../main/main';
 import Cities from '../cities/cities';
 import Places from '../places/places';
 import PlacesEmpty from '../places-empty/places-empty';
-import {CITIES} from '../../const';
-import placesItemProp from '../places-item/places-item.prop';
 
-function PlacesScreen({city, places, onChangeCity}) {
+function PlacesScreen() {
+  const city = useSelector(getCity);
+  const places = useSelector(getPlaces);
+  const isPlacesLoaded = useSelector(getLoadedPlacesStatus);
+  const dispatch = useDispatch();
+
   const filteredPlaces = useMemo(() => places.filter((place) => place.city.name === city), [city, places]);
+
+  const handleCityChange = (selectedCity) => dispatch(changeCity(selectedCity));
+
+  if (!isPlacesLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <div className="page page--gray page--main">
@@ -22,7 +34,7 @@ function PlacesScreen({city, places, onChangeCity}) {
       <Main className={classnames('page__main', 'page__main--index', {'page__main--index-empty' : !places.length})}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <Cities cities={CITIES} city={city} onChangeCity={onChangeCity} />
+          <Cities cities={CITIES} city={city} onChangeCity={handleCityChange} />
         </div>
         <div className="cities">
           {
@@ -36,22 +48,4 @@ function PlacesScreen({city, places, onChangeCity}) {
   );
 }
 
-PlacesScreen.propTypes = {
-  city: PropTypes.string.isRequired,
-  places: PropTypes.arrayOf(placesItemProp),
-  onChangeCity: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  city: getCity(state),
-  places: getPlaces(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onChangeCity(city) {
-    dispatch(changeCity(city));
-  },
-});
-
-export {PlacesScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(PlacesScreen);
+export default PlacesScreen;

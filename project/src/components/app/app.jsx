@@ -1,11 +1,9 @@
 import React from 'react';
-import PropsTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {getLoadedPlacesStatus} from '../../store/data/selectors';
+import {useSelector} from 'react-redux';
 import {getRequiredAuthStatus} from '../../store/user/selectors';
 import {Router as BrowserRouter, Route, Switch} from 'react-router-dom';
-import browserHistory from '../../browser-history';
 import {AppRoute} from '../../const';
+import browserHistory from '../../browser-history';
 import LoadingScreen from '../loading-screen/loading-screen';
 import AuthScreen from '../auth-screen/auth-screen';
 import PlacesScreen from '../places-screen/places-screen';
@@ -14,8 +12,10 @@ import FavoritesScreen from '../favorites-screen/favorites-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 
-function App({isAuthChecked, isPlacesLoaded}) {
-  if (!isAuthChecked || !isPlacesLoaded) {
+function App() {
+  const isAuthChecked = useSelector(getRequiredAuthStatus);
+
+  if (!isAuthChecked) {
     return (
       <LoadingScreen />
     );
@@ -24,12 +24,16 @@ function App({isAuthChecked, isPlacesLoaded}) {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route path={AppRoute.MAIN} exact>
-          <PlacesScreen />
-        </Route>
-        <Route path={AppRoute.LOGIN} exact>
-          <AuthScreen />
-        </Route>
+        <Route
+          path={AppRoute.MAIN}
+          exact
+          render={() => <PlacesScreen />}
+        />
+        <Route
+          path={AppRoute.LOGIN}
+          exact
+          render={() =><AuthScreen /> }
+        />
         <PrivateRoute
           path={AppRoute.FAVORITES}
           exact
@@ -40,23 +44,12 @@ function App({isAuthChecked, isPlacesLoaded}) {
           exact
           render={({match}) => <PlaceScreen id={parseInt(match.params.id, 10)} />}
         />
-        <Route>
-          <NotFoundScreen />
-        </Route>
+        <Route
+          render={() => <NotFoundScreen />}
+        />
       </Switch>
     </BrowserRouter>
   );
 }
 
-App.propTypes = {
-  isAuthChecked: PropsTypes.bool.isRequired,
-  isPlacesLoaded: PropsTypes.bool.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  isAuthChecked: getRequiredAuthStatus(state),
-  isPlacesLoaded: getLoadedPlacesStatus(state),
-});
-
-export {App};
-export default connect(mapStateToProps, null)(App);
+export default App;
