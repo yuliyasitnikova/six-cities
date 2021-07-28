@@ -46,8 +46,8 @@ Places.propTypes = {
   sortType: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  sortType: state.sortType,
+const mapStateToProps = ({UI}) => ({
+  sortType: UI.sortType,
 });
 
 export {Places};

@@ -45,8 +45,8 @@ PlaceScreen.propTypes = {
   getPlace: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  place: state.place,
+const mapStateToProps = ({DATA}) => ({
+  place: DATA.place,
 });
 
 const mapDispatchToProps = (dispatch) => ({

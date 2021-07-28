@@ -73,8 +73,8 @@ ReviewsForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  reviewSendStatus: state.reviewSendStatus,
+const mapStateToProps = ({UI}) => ({
+  reviewSendStatus: UI.reviewSendStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({

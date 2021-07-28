@@ -40,9 +40,9 @@ PlacesScreen.propTypes = {
   onChangeCity: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  city: state.city,
-  places: state.places.list,
+const mapStateToProps = ({DATA, UI}) => ({
+  city: UI.city,
+  places: DATA.places.list,
 });
 
 const mapDispatchToProps = (dispatch) => ({

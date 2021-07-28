@@ -22,8 +22,8 @@ User.propTypes = {
   }).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  user: state.user,
+const mapStateToProps = ({DATA}) => ({
+  user: DATA.user,
 });
 
 export {User};
