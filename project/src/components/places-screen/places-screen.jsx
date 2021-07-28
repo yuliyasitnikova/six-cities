@@ -2,6 +2,8 @@ import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {connect} from 'react-redux';
+import {getPlaces} from '../../store/data/selectors';
+import {getCity} from '../../store/ui/selectors';
 import {changeCity} from '../../store/actions';
 import Header from '../header/header';
 import Main from '../main/main';
@@ -40,9 +42,9 @@ PlacesScreen.propTypes = {
   onChangeCity: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({DATA, UI}) => ({
-  city: UI.city,
-  places: DATA.places.list,
+const mapStateToProps = (state) => ({
+  city: getCity(state),
+  places: getPlaces(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

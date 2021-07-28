@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 import {isAuth} from '../../utils';
 import User from '../user/user';
 import SignIn from '../sign-in/sign-in';
@@ -28,8 +29,8 @@ HeaderNav.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({USER}) => ({
-  authorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 

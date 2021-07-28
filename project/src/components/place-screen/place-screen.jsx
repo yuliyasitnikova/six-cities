@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {getPlace} from '../../store/data/selectors';
 import {clearPlace} from '../../store/actions';
 import {fetchPlace} from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -11,10 +12,10 @@ import placeDetailProp from '../place-detail/place-detail.prop';
 import placesItemProp from '../places-item/places-item.prop';
 import reviewsItemProp from '../reviews-item/reviews-item.prop';
 
-function PlaceScreen({id, place, getPlace}) {
+function PlaceScreen({id, place, loadPlace}) {
   useEffect(() => {
     window.scrollTo(0, 0);
-    getPlace(id);
+    loadPlace(id);
   }, [id]);
 
 
@@ -42,15 +43,15 @@ PlaceScreen.propTypes = {
     reviews: PropTypes.arrayOf(reviewsItemProp),
     isLoaded: PropTypes.bool.isRequired,
   }).isRequired,
-  getPlace: PropTypes.func.isRequired,
+  loadPlace: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({DATA}) => ({
-  place: DATA.place,
+const mapStateToProps = (state) => ({
+  place: getPlace(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getPlace: (id) => {
+  loadPlace: (id) => {
     dispatch(clearPlace());
     dispatch(fetchPlace(id));
   },

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {getLoadedPlacesStatus} from '../../store/data/selectors';
+import {getRequiredAuthStatus} from '../../store/user/selectors';
 import {Router as BrowserRouter, Route, Switch} from 'react-router-dom';
 import browserHistory from '../../browser-history';
 import {AppRoute} from '../../const';
@@ -51,9 +53,9 @@ App.propTypes = {
   isPlacesLoaded: PropsTypes.bool.isRequired,
 };
 
-const mapStateToProps = ({USER, DATA}) => ({
-  isAuthChecked: USER.isAuthChecked,
-  isPlacesLoaded: DATA.places.isLoaded,
+const mapStateToProps = (state) => ({
+  isAuthChecked: getRequiredAuthStatus(state),
+  isPlacesLoaded: getLoadedPlacesStatus(state),
 });
 
 export {App};

@@ -2,6 +2,7 @@ import React, {useCallback, useState} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import {connect} from 'react-redux';
+import {getSortType} from '../../store/ui/selectors';
 import {changeSort} from '../../store/actions';
 import {SortType} from '../../const';
 
@@ -40,8 +41,8 @@ Sorting.propTypes = {
   onChangeSort: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({UI}) => ({
-  sortType: UI.sortType,
+const mapStateToProps = (state) => ({
+  sortType: getSortType(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

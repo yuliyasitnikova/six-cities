@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {getReviewSendStatus} from '../../store/ui/selectors';
 import {postReview} from '../../store/api-actions';
 import {ReviewSendStatus, COMMENT_MIN_LENGTH, COMMENT_MAX_LENGTH} from '../../const';
 
@@ -73,8 +74,8 @@ ReviewsForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({UI}) => ({
-  reviewSendStatus: UI.reviewSendStatus,
+const mapStateToProps = (state) => ({
+  reviewSendStatus: getReviewSendStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

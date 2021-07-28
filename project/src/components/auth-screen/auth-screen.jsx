@@ -2,6 +2,7 @@ import React, {useRef} from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 import {login} from '../../store/api-actions';
 import {AppRoute} from '../../const';
 import {isAuth} from '../../utils';
@@ -63,8 +64,8 @@ AuthScreen.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({USER}) => ({
-  authorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

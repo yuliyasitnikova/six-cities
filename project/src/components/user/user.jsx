@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {getUser} from '../../store/data/selectors';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 
@@ -22,8 +23,8 @@ User.propTypes = {
   }).isRequired,
 };
 
-const mapStateToProps = ({DATA}) => ({
-  user: DATA.user,
+const mapStateToProps = (state) => ({
+  user: getUser(state),
 });
 
 export {User};

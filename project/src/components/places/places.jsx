@@ -1,6 +1,7 @@
 import React, {useState, useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {getSortType} from '../../store/ui/selectors';
 import {PlacesListClassModifier, SortType} from '../../const';
 import Sorting from '../sorting/sorting';
 import PlacesList from '../places-list/places-list';
@@ -46,8 +47,8 @@ Places.propTypes = {
   sortType: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({UI}) => ({
-  sortType: UI.sortType,
+const mapStateToProps = (state) => ({
+  sortType: getSortType(state),
 });
 
 export {Places};
