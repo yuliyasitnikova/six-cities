@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/actions';
+import {changeCity} from '../../store/actions';
 import Header from '../header/header';
 import Main from '../main/main';
 import Cities from '../cities/cities';
@@ -47,7 +47,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onChangeCity(city) {
-    dispatch(ActionCreator.changeCity(city));
+    dispatch(changeCity(city));
   },
 });
 

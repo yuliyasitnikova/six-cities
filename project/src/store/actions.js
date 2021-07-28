@@ -1,65 +1,77 @@
 export const ActionType = {
-  REQUIRED_AUTHORIZATION: 'REQUIRED_AUTHORIZATION',
-  LOGOUT: 'LOGOUT',
-  LOAD_USER: 'LOAD_USER',
-  LOAD_PLACES: 'LOAD_PLACES',
-  LOAD_PLACE_DATA: 'LOAD_PLACE_DATA',
-  CLEAR_PLACE_DATA: 'CLEAR_PLACE_DATA',
-  LOAD_REVIEWS: 'LOAD_REVIEWS',
-  DISABLE_REVIEW_FORM: 'DISABLE_REVIEW_FORM',
-  ENABLE_REVIEW_FORM: 'ENABLE_REVIEW_FORM',
-  RESET_REVIEW_FORM: 'RESET_REVIEW_FORM',
-  CHANGE_CITY: 'CHANGE_CITY',
-  CHANGE_SORT: 'CHANGE_SORT',
-  REDIRECT_TO_ROUTE: 'REDIRECT_TO_ROUTE',
+  REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
+  LOGOUT: 'user/logout',
+
+  LOAD_USER: 'data/load_user',
+  LOAD_PLACES: 'data/loadPlaces',
+  LOAD_PLACE: 'data/loadPlace',
+  CLEAR_PLACE: 'data/clearPlace',
+  LOAD_REVIEWS: 'data/loadReviews',
+
+  CHANGE_CITY: 'ui/change_city',
+  CHANGE_SORT: 'ui/change_sort',
+  DISABLE_REVIEW_FORM: 'ui/disable_review_form',
+  ENABLE_REVIEW_FORM: 'ui/enable_review_form',
+  RESET_REVIEW_FORM: 'ui/reset_review_form',
+  REDIRECT_TO_ROUTE: 'ui/redirect_to_route',
 };
 
-export const ActionCreator = {
-  requireAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
-    payload: status,
-  }),
-  logout: () => ({
-    type: ActionType.LOGOUT,
-  }),
-  loadUser: (user) => ({
-    type: ActionType.LOAD_USER,
-    payload: user,
-  }),
-  loadPlaces: (places) => ({
-    type: ActionType.LOAD_PLACES,
-    payload: places,
-  }),
-  loadPlaceData: (data) => ({
-    type: ActionType.LOAD_PLACE_DATA,
-    payload: data,
-  }),
-  clearPlaceData: () => ({
-    type: ActionType.CLEAR_PLACE_DATA,
-  }),
-  disableReviewForm: () => ({
-    type: ActionType.DISABLE_REVIEW_FORM,
-  }),
-  enableReviewForm: () => ({
-    type: ActionType.ENABLE_REVIEW_FORM,
-  }),
-  resetReviewForm: () => ({
-    type: ActionType.RESET_REVIEW_FORM,
-  }),
-  loadReviews: (reviews) => ({
-    type: ActionType.LOAD_REVIEWS,
-    payload: reviews,
-  }),
-  changeCity: (city) => ({
-    type: ActionType.CHANGE_CITY,
-    payload: city,
-  }),
-  changeSort: (type) => ({
-    type: ActionType.CHANGE_SORT,
-    payload: type,
-  }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
-  }),
-};
+export const requireAuthorization = (status) => ({
+  type: ActionType.REQUIRED_AUTHORIZATION,
+  payload: status,
+});
+
+export const logout = () => ({
+  type: ActionType.LOGOUT,
+});
+
+export const loadUser = (user) => ({
+  type: ActionType.LOAD_USER,
+  payload: user,
+});
+
+export const loadPlaces = (places) => ({
+  type: ActionType.LOAD_PLACES,
+  payload: places,
+});
+
+export const loadPlace = (data) => ({
+  type: ActionType.LOAD_PLACE,
+  payload: data,
+});
+
+export const clearPlace = () => ({
+  type: ActionType.CLEAR_PLACE,
+});
+
+export const loadReviews = (reviews) => ({
+  type: ActionType.LOAD_REVIEWS,
+  payload: reviews,
+});
+
+export const changeCity = (city) => ({
+  type: ActionType.CHANGE_CITY,
+  payload: city,
+});
+
+export const changeSort = (type) => ({
+  type: ActionType.CHANGE_SORT,
+  payload: type,
+});
+
+export const disableReviewForm = () => ({
+  type: ActionType.DISABLE_REVIEW_FORM,
+});
+
+export const enableReviewForm = () => ({
+  type: ActionType.ENABLE_REVIEW_FORM,
+});
+
+export const resetReviewForm = () => ({
+  type: ActionType.RESET_REVIEW_FORM,
+});
+
+export const redirectToRoute = (url) => ({
+  type: ActionType.REDIRECT_TO_ROUTE,
+  payload: url,
+});

@@ -1,13 +1,13 @@
-import {ActionCreator} from './actions';
+import {loadUser, requireAuthorization, logout as closeSession, loadPlaces, loadPlace, loadReviews, disableReviewForm, enableReviewForm, resetReviewForm, redirectToRoute} from './actions';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
 import {adaptPlaceToClient, adaptReviewToClient, adaptUserToClient} from '../adapter';
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
     .then(({data}) => adaptUserToClient(data))
-    .then((user) => dispatch(ActionCreator.loadUser(user)))
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .catch(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
+    .then((user) => dispatch(loadUser(user)))
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .catch(() => dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
@@ -16,21 +16,21 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
       localStorage.setItem('token', data.token);
       return adaptUserToClient(data);
     })
-    .then((user) => dispatch(ActionCreator.loadUser(user)))
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.MAIN)))
+    .then((user) => dispatch(loadUser(user)))
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(redirectToRoute(AppRoute.MAIN)))
 );
 
 export const logout = () => (dispatch, _getState, api) => (
   api.delete(APIRoute.LOGOUT)
     .then(() => localStorage.removeItem('token'))
-    .then(() => dispatch(ActionCreator.logout()))
+    .then(() => dispatch(closeSession()))
 );
 
 export const fetchPlaces = () => (dispatch, _getState, api) => (
   api.get(APIRoute.PLACES)
     .then(({data}) => data.map(adaptPlaceToClient))
-    .then((places) => dispatch(ActionCreator.loadPlaces(places)))
+    .then((places) => dispatch(loadPlaces(places)))
 );
 
 export const fetchPlace = (id) => (dispatch, _getState, api) => (
@@ -46,21 +46,21 @@ export const fetchPlace = (id) => (dispatch, _getState, api) => (
         nearby: nearby.map(adaptPlaceToClient),
         reviews: reviews.map(adaptReviewToClient),
       };
-      dispatch(ActionCreator.loadPlaceData(data));
+      dispatch(loadPlace(data));
     })
 );
 
 export const postReview = (place, {comment, rating}) => (dispatch, _getState, api) => {
-  dispatch(ActionCreator.disableReviewForm());
+  dispatch(disableReviewForm());
 
   return api.post(APIRoute.REVIEWS.replace(':place_id', place), {comment, rating})
     .then(({data}) => {
       const reviews = data.map(adaptReviewToClient);
-      dispatch(ActionCreator.loadReviews(reviews));
-      dispatch(ActionCreator.resetReviewForm());
+      dispatch(loadReviews(reviews));
+      dispatch(resetReviewForm());
     })
     .catch(() => {
       //todo: showError
-      dispatch(ActionCreator.enableReviewForm());
+      dispatch(enableReviewForm());
     });
 };

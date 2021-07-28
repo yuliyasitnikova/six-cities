@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/actions';
+import {clearPlace} from '../../store/actions';
 import {fetchPlace} from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import Header from '../header/header';
@@ -51,7 +51,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getPlace: (id) => {
-    dispatch(ActionCreator.clearPlaceData());
+    dispatch(clearPlace());
     dispatch(fetchPlace(id));
   },
 });

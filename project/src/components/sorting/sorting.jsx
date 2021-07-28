@@ -2,7 +2,7 @@ import React, {useCallback, useState} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/actions';
+import {changeSort} from '../../store/actions';
 import {SortType} from '../../const';
 
 function Sorting({sortType, onChangeSort}) {
@@ -46,7 +46,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onChangeSort(type) {
-    dispatch(ActionCreator.changeSort(type));
+    dispatch(changeSort(type));
   },
 });
 
