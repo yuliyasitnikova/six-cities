@@ -5,10 +5,14 @@ import {Provider} from 'react-redux';
 import {createAPI} from './api';
 import rootReducer from './store/root-reducer';
 import {redirect} from './store/middlewares/redirect';
-import {checkAuth, fetchPlaces} from './store/api-actions';
+import {requireAuthorization} from './store/actions';
+import {checkAuth} from './store/api-actions';
+import {AuthorizationStatus} from './const';
 import App from './components/app/app';
 
-const api = createAPI();
+const api = createAPI(() => {
+  store.dispatch((requireAuthorization(AuthorizationStatus.NO_AUTH)));
+});
 
 const store = configureStore({
   reducer: rootReducer,

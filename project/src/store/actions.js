@@ -7,6 +7,7 @@ export const ActionType = {
   LOAD_USER: 'data/loadUser',
   LOAD_PLACES: 'data/loadPlaces',
   LOAD_PLACE: 'data/loadPlace',
+  LOAD_REVIEWS: 'data/loadReviews',
   CLEAR_PLACE: 'data/clearPlace',
   LOAD_REVIEWS: 'data/loadReviews',
 
