@@ -1,19 +1,14 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import FavoritesItem from '../favorites-item/favorites-item';
 import favoritesItemProp from '../favorites-item/favorites-item.prop';
 
 function FavoritesList({places}) {
-  const favoritesObject = useMemo(() => {
-    const _favoritesObject = {};
-    places.forEach((place) => {
-      if (place.isFavorite) {
-        const currentCityArr = _favoritesObject[place.city.name] || [];
-        _favoritesObject[place.city.name] = [...currentCityArr, place];
-      }
-    });
-    return _favoritesObject;
-  }, [places]);
+  const favoritesObject = {};
+  places.forEach((place) => {
+    const currentCityArr = favoritesObject[place.city.name] || [];
+    favoritesObject[place.city.name] = [...currentCityArr, place];
+  });
 
   return (
     <ul className="favorites__list">
@@ -27,8 +22,8 @@ function FavoritesList({places}) {
             </div>
           </div>
           <div className="favorites__places">
-            {favoritesObject[cityName].map((offer) => (
-              <FavoritesItem key={offer.id} offer={offer} />
+            {favoritesObject[cityName].map((place) => (
+              <FavoritesItem key={place.title} place={place} />
             ))}
           </div>
         </li>
