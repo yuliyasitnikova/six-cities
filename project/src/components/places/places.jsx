@@ -1,14 +1,16 @@
-import React, {useMemo, useState} from 'react';
+import React, {useState, useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {getSortType} from '../../store/ui/selectors';
 import {PlacesListClassModifier, SortType} from '../../const';
 import Sorting from '../sorting/sorting';
 import PlacesList from '../places-list/places-list';
 import PlacesMap from '../places-map/places-map';
 import placesItemProp from '../places-item/places-item.prop';
 
-function Places({city, places, sortType}) {
-  const [activePoint, setActivePoint] = useState({});
+function Places({city, places}) {
+  const [activePoint, setActivePoint] = useState(null);
+  const sortType = useSelector(getSortType);
 
   const sortedPlaces = useMemo(() => {
     switch (sortType) {
@@ -22,12 +24,8 @@ function Places({city, places, sortType}) {
     return places;
   }, [places, sortType]);
 
-  const onPlaceMouseEnter = (placeId) => {
-    const activeItem = places.find((place) => place.id === placeId);
-    setActivePoint(activeItem);
-  };
-
-  const onPlaceMouseLeave = () => setActivePoint({});
+  const handlePlaceMouseEnter = useCallback((id) => setActivePoint(id), []);
+  const handlePlaceMouseLeave = useCallback(() => setActivePoint(null), []);
 
   return (
     <div className="cities__places-container container">
@@ -35,7 +33,7 @@ function Places({city, places, sortType}) {
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">{places.length} place{places.length !== 1 && 's'} to stay in {city}</b>
         <Sorting />
-        <PlacesList className={PlacesListClassModifier.CITIES} places={sortedPlaces} onMouseEnterCallback={onPlaceMouseEnter} onMouseLeaveCallback={onPlaceMouseLeave} />
+        <PlacesList className={PlacesListClassModifier.CITIES} places={sortedPlaces} onPlaceMouseEnter={handlePlaceMouseEnter} onPlaceMouseLeave={handlePlaceMouseLeave} />
       </section>
       <div className="cities__right-section">
         <PlacesMap points={places} activePoint={activePoint} />
@@ -47,12 +45,6 @@ function Places({city, places, sortType}) {
 Places.propTypes = {
   city: PropTypes.string.isRequired,
   places: PropTypes.arrayOf(placesItemProp),
-  sortType: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  sortType: state.sortType,
-});
-
-export {Places};
-export default connect(mapStateToProps, null)(Places);
+export default Places;

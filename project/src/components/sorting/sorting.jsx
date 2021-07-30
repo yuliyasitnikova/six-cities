@@ -1,32 +1,31 @@
-import React, {useCallback, useState} from 'react';
-import PropTypes from 'prop-types';
+import React, {useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {getSortType} from '../../store/ui/selectors';
 import classNames from 'classnames/bind';
-import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/actions';
+import {changeSort} from '../../store/actions';
 import {SortType} from '../../const';
 
-function Sorting({sortType, onChangeSort}) {
+function Sorting() {
   const [openedStatus, setOpenedStatus] = useState(false);
-
-  const onTypeClick = useCallback(() => {
-    setOpenedStatus(!openedStatus);
-  }, []);
-
-  const onOptionsClick = useCallback(({target}) => {
-    onChangeSort(target.textContent);
-    setOpenedStatus(false);
-  }, []);
+  const sortType = useSelector(getSortType);
+  const dispatch = useDispatch();
 
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex="0" onClick={onTypeClick}>
+      <span className="places__sorting-type" tabIndex="0" onClick={() => setOpenedStatus(!openedStatus)}>
         {sortType}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select" />
         </svg>
       </span>
-      <ul className={classNames('places__options', 'places__options--custom', {'places__options--opened' : openedStatus})} onClick={onOptionsClick}>
+      <ul
+        className={classNames('places__options', 'places__options--custom', {'places__options--opened' : openedStatus})}
+        onClick={({target}) => {
+          dispatch(changeSort(target.textContent));
+          setOpenedStatus(false);
+        }}
+      >
         {Object.values(SortType).map((type) => (
           <li key={`Sort by ${type}`} className={classNames('places__option', {'places__option--active' : sortType === type})} tabIndex="0">{type}</li>
         ))}
@@ -35,20 +34,4 @@ function Sorting({sortType, onChangeSort}) {
   );
 }
 
-Sorting.propTypes = {
-  sortType: PropTypes.string.isRequired,
-  onChangeSort: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  sortType: state.sortType,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onChangeSort(type) {
-    dispatch(ActionCreator.changeSort(type));
-  },
-});
-
-export {Sorting};
-export default connect(mapStateToProps, mapDispatchToProps)(Sorting);
+export default Sorting;

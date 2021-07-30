@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {getReviewSendStatus} from '../../store/ui/selectors';
 import {postReview} from '../../store/api-actions';
 import {ReviewSendStatus, COMMENT_MIN_LENGTH, COMMENT_MAX_LENGTH} from '../../const';
 
@@ -12,37 +13,33 @@ const ratingValues = [
   {value: 1, title: 'terribly'},
 ];
 
-function ReviewsForm({place, reviewSendStatus, onSubmit}) {
+function ReviewsForm({place}) {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(null);
 
+  const reviewSendStatus = useSelector(getReviewSendStatus);
+  const dispatch = useDispatch();
+
   const isReviewPosting = reviewSendStatus === ReviewSendStatus.POSTING;
   const isReviewAdding = reviewSendStatus === ReviewSendStatus.SUCCESS;
-
   const isButtonDisabled = rating === null || comment.length < COMMENT_MIN_LENGTH || isReviewPosting;
+
+  const handleRatingChange = ({target}) => setRating(Number(target.value));
+
+  const handleCommentChange = ({target}) => setComment(target.value);
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    dispatch(postReview(place, {
+      comment,
+      rating,
+    }));
+  };
 
   useEffect(() => {
     setComment('');
     setRating(null);
   }, [isReviewAdding]);
-
-  const handleRatingChange = ({target}) => setRating(Number(target.value));
-
-  const handleCommentChange = ({target}) => {
-    const value = target.value;
-    if (value.length <= COMMENT_MAX_LENGTH) {
-      setComment(value);
-    }
-  };
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    const data = {
-      comment,
-      rating,
-    };
-    onSubmit(place, data);
-  };
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
@@ -61,7 +58,7 @@ function ReviewsForm({place, reviewSendStatus, onSubmit}) {
         ))}
       </div>
 
-      <textarea className="reviews__textarea form__textarea" id="review" name="review" value={comment} placeholder="Tell how was your stay, what you like and what can be improved" disabled={isReviewPosting} onChange={handleCommentChange} />
+      <textarea className="reviews__textarea form__textarea" id="review" name="review" value={comment} maxLength={COMMENT_MAX_LENGTH} placeholder="Tell how was your stay, what you like and what can be improved" disabled={isReviewPosting} onChange={handleCommentChange} />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay
@@ -75,19 +72,6 @@ function ReviewsForm({place, reviewSendStatus, onSubmit}) {
 
 ReviewsForm.propTypes = {
   place: PropTypes.number.isRequired,
-  reviewSendStatus: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  reviewSendStatus: state.reviewSendStatus,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (place, data) => {
-    dispatch(postReview(place, data));
-  },
-});
-
-export {ReviewsForm};
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewsForm);
+export default ReviewsForm;

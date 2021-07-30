@@ -5,25 +5,16 @@ import {MAP_ICON_DEFAULT, MAP_ICON_ACTIVE} from '../../const';
 
 function useMap(mapRef, points, activePoint) {
   const [map, setMap] = useState(null);
-  const city = points[0].city;
+  const {latitude, longitude, zoom} = points[0].city.location;
   const markers = [];
 
   useEffect(() => {
-    if (mapRef !== null) {
-      const {location: {latitude, longitude, zoom}} = city;
-
-      if (map !== null) {
-        map.flyTo([latitude, longitude], zoom, {animate: true, duration: 2.5, maxZoom: 20});
-        return;
-      }
-
+    if (mapRef !== null && map === null) {
       const instance = leaflet.map(mapRef.current, {
         center: [latitude, longitude],
         zoom: zoom,
         zoomControl: false,
       });
-
-      instance.setView([latitude, longitude], zoom);
 
       leaflet
         .tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -33,14 +24,21 @@ function useMap(mapRef, points, activePoint) {
 
       setMap(instance);
     }
-  }, [mapRef, map, city]);
+  }, [mapRef, map]);
+
+  useEffect(() => {
+    if (map) {
+      map.flyTo([latitude, longitude], zoom, {animate: true, duration: 2.5});
+    }
+  }, [latitude, longitude, zoom]);
 
   useEffect(() => {
     if (map) {
       points.forEach((point) => {
-        const {id, location: {latitude, longitude}} = point;
-        const marker = leaflet.marker([latitude, longitude], {
-          icon: (activePoint.id === id)
+        const {id} = point;
+        const {latitude: pointLat, longitude: pointLng} = point.location;
+        const marker = leaflet.marker([pointLat, pointLng], {
+          icon: (id === activePoint)
             ? leaflet.icon(MAP_ICON_ACTIVE)
             : leaflet.icon(MAP_ICON_DEFAULT),
         });
@@ -51,7 +49,6 @@ function useMap(mapRef, points, activePoint) {
       return () => markers.forEach((marker) => marker.remove());
     }
   }, [map, points, activePoint]);
-
 }
 
 export default useMap;

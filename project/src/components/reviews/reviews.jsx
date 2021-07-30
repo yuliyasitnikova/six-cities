@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 import {isAuth} from '../../utils';
 import ReviewsList from '../reviews-list/reviews-list';
 import ReviewsForm from '../reviews-form/reviews-form';
 import reviewsItemProp from '../reviews-item/reviews-item.prop';
 
-function Reviews({reviews, place, authorizationStatus}) {
+function Reviews({reviews, place}) {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+
   return (
     <section className="property__reviews reviews">
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
@@ -19,12 +22,6 @@ function Reviews({reviews, place, authorizationStatus}) {
 Reviews.propTypes = {
   reviews: PropTypes.arrayOf(reviewsItemProp),
   place: PropTypes.number.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-});
-
-export {Reviews};
-export default connect(mapStateToProps, null)(Reviews);
+export default Reviews;

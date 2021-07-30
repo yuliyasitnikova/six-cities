@@ -1,24 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore, applyMiddleware} from 'redux';
-import thunk from 'redux-thunk';
+import {configureStore} from '@reduxjs/toolkit';
 import {Provider} from 'react-redux';
-import {composeWithDevTools} from 'redux-devtools-extension';
 import {createAPI} from './api';
-import {reducer} from './store/reducer';
+import rootReducer from './store/root-reducer';
 import {redirect} from './store/middlewares/redirect';
 import {checkAuth, fetchPlaces} from './store/api-actions';
 import App from './components/app/app';
 
 const api = createAPI();
 
-const store = createStore(
-  reducer,
-  composeWithDevTools(
-    applyMiddleware(thunk.withExtraArgument(api)),
-    applyMiddleware(redirect),
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => (
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      },
+    }).concat(redirect)
   ),
-);
+});
 
 store.dispatch(checkAuth());
 store.dispatch(fetchPlaces());

@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import {Link} from 'react-router-dom';
@@ -6,18 +6,15 @@ import {AppRoute} from '../../const';
 import {capitalize, getRatingWidth} from '../../utils';
 import placesItemProp from './places-item.prop';
 
-function PlacesItem({className = '', place, onMouseEnterCallback, onMouseLeaveCallback}) {
+function PlacesItem({className = '', place, onMouseEnter, onMouseLeave}) {
   const {id, isPremium, isFavorite, previewImage, price, title, type, rating} = place;
   const detailHref = AppRoute.ROOM.replace(':id', id);
-
-  const onMouseEnter = useCallback(() => onMouseEnterCallback(id), [id]);
-  const onMouseLeave = useCallback(() => onMouseLeaveCallback(), []);
 
   return (
     <article
       className={`place-card ${className}`}
-      onMouseEnter={onMouseEnterCallback ? onMouseEnter : undefined}
-      onMouseLeave={onMouseLeaveCallback ? onMouseLeave : undefined}
+      onMouseEnter={onMouseEnter ? () => onMouseEnter(id) : undefined}
+      onMouseLeave={onMouseLeave ? onMouseLeave : undefined}
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className="place-card__image-wrapper">
@@ -56,8 +53,8 @@ function PlacesItem({className = '', place, onMouseEnterCallback, onMouseLeaveCa
 PlacesItem.propTypes = {
   className: PropTypes.string,
   place: placesItemProp,
-  onMouseEnterCallback: PropTypes.func,
-  onMouseLeaveCallback: PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
 };
 
 export default PlacesItem;

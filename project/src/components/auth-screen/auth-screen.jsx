@@ -1,15 +1,18 @@
 import React, {useRef} from 'react';
-import PropTypes from 'prop-types';
-import {Redirect} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 import {login} from '../../store/api-actions';
+import {Redirect} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {isAuth} from '../../utils';
 import Header from '../header/header';
+import Main from '../main/main';
 
-function AuthScreen({authorizationStatus, onSubmit}) {
+function AuthScreen() {
   const loginRef = useRef();
   const passwordRef = useRef();
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const dispatch = useDispatch();
 
   if (isAuth(authorizationStatus)) {
     return (
@@ -20,16 +23,16 @@ function AuthScreen({authorizationStatus, onSubmit}) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmit({
+    dispatch(login({
       login: loginRef.current.value,
       password: passwordRef.current.value,
-    });
+    }));
   };
 
   return (
     <div className="page page--gray page--login">
       <Header />
-      <main className="page__main page__main--login">
+      <Main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
@@ -53,25 +56,9 @@ function AuthScreen({authorizationStatus, onSubmit}) {
             </div>
           </section>
         </div>
-      </main>
+      </Main>
     </div>
   );
 }
 
-AuthScreen.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(authData) {
-    dispatch(login(authData));
-  },
-});
-
-export {AuthScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);
+export default AuthScreen;

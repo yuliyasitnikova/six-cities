@@ -1,11 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {getUser} from '../../store/data/selectors';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 
-function User({user}) {
-  const {email} = user;
+function User() {
+  const {email} = useSelector(getUser);
+
   return (
     <li className="header__nav-item user">
       <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITES}>
@@ -16,15 +17,4 @@ function User({user}) {
   );
 }
 
-User.propTypes = {
-  user: PropTypes.shape({
-    email: PropTypes.string.isRequired,
-  }).isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  user: state.user,
-});
-
-export {User};
-export default connect(mapStateToProps, null)(User);
+export default User;

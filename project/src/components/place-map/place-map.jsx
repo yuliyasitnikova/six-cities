@@ -26,9 +26,7 @@ PlaceMap.propTypes = {
       }).isRequired,
     }).isRequired,
   ),
-  activePoint: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-  }),
+  activePoint: PropTypes.number.isRequired,
 };
 
 export default PlaceMap;
