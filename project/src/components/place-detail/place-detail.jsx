@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import {capitalize, getRatingWidth} from '../../utils';
+import BookmarkButton from '../bookmark-button/bookmark-button';
 import Reviews from '../reviews/reviews';
 import PlaceMap from '../place-map/place-map';
 import PlacesNear from '../places-near/places-near';
@@ -30,12 +31,12 @@ function PlaceDetail({place}) {
             {isPremium && <div className="property__mark"><span>Premium</span></div>}
             <div className="property__name-wrapper">
               <h1 className="property__name">{title}</h1>
-              <button className={classNames('property__bookmark-button', {'property__bookmark-button--active': isFavorite}, 'button')} type="button">
+              <BookmarkButton className="property__bookmark-button" placeId={id} isActive={isFavorite}>
                 <svg className="property__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark" />
                 </svg>
                 <span className="visually-hidden">To bookmarks</span>
-              </button>
+              </BookmarkButton>
             </div>
             <div className="property__rating rating">
               <div className="property__stars rating__stars">

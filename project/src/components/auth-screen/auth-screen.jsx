@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {getAuthorizationStatus} from '../../store/user/selectors';
+import {getAuthStatus} from '../../store/user/selectors';
 import {login} from '../../store/api-actions';
 import {Redirect} from 'react-router-dom';
 import {AppRoute} from '../../const';
@@ -11,7 +11,7 @@ import Main from '../main/main';
 function AuthScreen() {
   const loginRef = useRef();
   const passwordRef = useRef();
-  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const authorizationStatus = useSelector(getAuthStatus);
   const dispatch = useDispatch();
 
   if (isAuth(authorizationStatus)) {

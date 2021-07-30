@@ -26,7 +26,6 @@ const store = configureStore({
 });
 
 store.dispatch(checkAuth());
-store.dispatch(fetchPlaces());
 
 ReactDOM.render(
   <React.StrictMode>

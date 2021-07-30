@@ -10,8 +10,9 @@ import Main from '../main/main';
 import PlaceDetail from '../place-detail/place-detail';
 
 function PlaceScreen({id}) {
-  const place = useSelector(getPlace);
   const dispatch = useDispatch();
+
+  const place = useSelector(getPlace);
 
   useEffect(() => {
     window.scrollTo(0, 0);
