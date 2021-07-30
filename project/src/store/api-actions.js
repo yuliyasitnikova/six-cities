@@ -84,3 +84,25 @@ export const postReview = (place, {comment, rating}) => async (dispatch, _getSta
     dispatch(enableReviewForm());
   }
 };
+
+export const fetchFavorites = () => async (dispatch, _getState, api) => {
+  try {
+    const {data} = await api.get(APIRoute.FAVORITES);
+    const places = data.map(adaptPlaceToClient);
+    dispatch(loadFavorites(places));
+  }
+  catch (err) {
+    //todo: showError
+  }
+};
+
+export const setFavorite = (id, status) => async (dispatch, _getState, api) => {
+  try {
+    const {data} = await api.post(`${APIRoute.FAVORITES}/${id}/${status}`);
+    const updated = adaptPlaceToClient(data);
+    dispatch(updatePlaces(updated));
+  }
+  catch (err) {
+    //todo: showError
+  }
+};

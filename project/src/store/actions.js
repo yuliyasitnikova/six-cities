@@ -9,7 +9,8 @@ export const ActionType = {
   LOAD_PLACE: 'data/loadPlace',
   LOAD_REVIEWS: 'data/loadReviews',
   CLEAR_PLACE: 'data/clearPlace',
-  LOAD_REVIEWS: 'data/loadReviews',
+  LOAD_FAVORITES: 'data/loadFavorites',
+  UPDATE_PLACE: 'data/updatePlace',
 
   CHANGE_CITY: 'ui/changeCity',
   CHANGE_SORT: 'ui/changeSort',
@@ -41,6 +42,14 @@ export const clearPlace = createAction(ActionType.CLEAR_PLACE);
 
 export const loadReviews = createAction(ActionType.LOAD_REVIEWS, (reviews) => ({
   payload: reviews,
+}));
+
+export const loadFavorites = createAction(ActionType.LOAD_FAVORITES, (favorites) => ({
+  payload: favorites,
+}));
+
+export const updatePlaces = createAction(ActionType.UPDATE_PLACE, (place) => ({
+  payload: place,
 }));
 
 export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => ({
