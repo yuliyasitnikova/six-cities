@@ -1,9 +1,10 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {getRequiredAuthStatus} from '../../store/user/selectors';
+import {getAuthStatus} from '../../store/user/selectors';
 import {Router as BrowserRouter, Route, Switch} from 'react-router-dom';
-import {AppRoute} from '../../const';
 import browserHistory from '../../browser-history';
+import {AppRoute} from '../../const';
+import {isCheckedAuth} from '../../utils';
 import LoadingScreen from '../loading-screen/loading-screen';
 import AuthScreen from '../auth-screen/auth-screen';
 import PlacesScreen from '../places-screen/places-screen';
@@ -13,9 +14,9 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 
 function App() {
-  const isAuthChecked = useSelector(getRequiredAuthStatus);
+  const authStatus = useSelector(getAuthStatus);
 
-  if (!isAuthChecked) {
+  if (isCheckedAuth(authStatus)) {
     return (
       <LoadingScreen />
     );
