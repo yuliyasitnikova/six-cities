@@ -21,7 +21,7 @@ export const checkAuth = () => async (dispatch, _getState, api) => {
     dispatch(loadUser(adaptUserToClient(data)));
     dispatch(requireAuthorization(AuthorizationStatus.AUTH));
   } catch (err) {
-    //todo: showError
+    dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH));
   }
 };
 
