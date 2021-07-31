@@ -9,6 +9,7 @@ export const APIRoute = {
   PLACE: '/hotels/:id',
   NEARBY: '/hotels/:place_id/nearby',
   REVIEWS: '/comments/:place_id',
+  FAVORITES: '/favorite',
 };
 
 export const AppRoute = {

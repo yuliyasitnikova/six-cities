@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {loadUser, loadPlaces, loadPlace, loadReviews, clearPlace} from '../actions';
+import {loadUser, loadPlaces, loadPlace, loadReviews, clearPlace, loadFavorites, updatePlaces} from '../actions';
 
 const initialState = {
   user: {},
@@ -11,6 +11,10 @@ const initialState = {
     properties: {},
     nearby: [],
     reviews: [],
+    isLoaded: false,
+  },
+  favorites: {
+    list: [],
     isLoaded: false,
   },
 };
@@ -42,6 +46,24 @@ const data = createReducer(initialState, (builder) => {
         reviews: [],
         isLoaded: false,
       };
+    })
+    .addCase(loadFavorites, (state, action) => {
+      state.favorites = {
+        list: action.payload,
+        isLoaded: true,
+      };
+    })
+    .addCase(updatePlaces, (state, action) => {
+      const updated = action.payload;
+      if (state.places.isLoaded) {
+        state.places.list = state.places.list.map((place) => place.id === updated.id ? updated : place);
+      }
+      if (state.place.isLoaded) {
+        state.place.properties = updated;
+      }
+      if (state.favorites.isLoaded) {
+        state.favorites.list = state.favorites.list.filter((place) => place.id !== updated.id);
+      }
     });
 });
 

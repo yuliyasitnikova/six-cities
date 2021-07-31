@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames/bind';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
-import {capitalize, getRatingWidth} from '../../utils';
+import {capitalize, getPlaceLink, getRatingWidth} from '../../utils';
+import BookmarkButton from '../bookmark-button/bookmark-button';
 import placesItemProp from './places-item.prop';
 
 function PlacesItem({className = '', place, onMouseEnter, onMouseLeave}) {
+
   const {id, isPremium, isFavorite, previewImage, price, title, type, rating} = place;
-  const detailHref = AppRoute.ROOM.replace(':id', id);
 
   return (
     <article
@@ -18,7 +17,7 @@ function PlacesItem({className = '', place, onMouseEnter, onMouseLeave}) {
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className="place-card__image-wrapper">
-        <Link to={detailHref}>
+        <Link to={getPlaceLink(id)}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
         </Link>
       </div>
@@ -28,12 +27,12 @@ function PlacesItem({className = '', place, onMouseEnter, onMouseLeave}) {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={classNames('place-card__bookmark-button', {'place-card__bookmark-button--active': isFavorite}, 'button')} type="button">
+          <BookmarkButton className="place-card__bookmark-button" placeId={id} isActive={isFavorite}>
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark" />
             </svg>
             <span className="visually-hidden">To bookmarks</span>
-          </button>
+          </BookmarkButton>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -42,7 +41,7 @@ function PlacesItem({className = '', place, onMouseEnter, onMouseLeave}) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={detailHref}>{title}</Link>
+          <Link to={getPlaceLink(id)}>{title}</Link>
         </h2>
         <p className="place-card__type">{capitalize(type)}</p>
       </div>
