@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Router} from 'react-router-dom';
+import browserHistory from './browser-history';
 import {configureStore} from '@reduxjs/toolkit';
 import {Provider} from 'react-redux';
 import {createAPI} from './api';
@@ -30,7 +32,9 @@ store.dispatch(checkAuth());
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Router history={browserHistory}>
+        <App />
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

@@ -17,7 +17,7 @@ import {
 } from './actions';
 
 const user = {
-  avatarUrl: 'avatar.png',
+  avatar: 'avatar.png',
   email: 'test@test.com',
   id: 1,
   isPro: false,
@@ -38,7 +38,7 @@ const place = {
   description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
   goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
   host: {
-    avatarUrl: 'avatar.png',
+    avatar: 'avatar.png',
     id: 3,
     isPro: true,
     name: 'Angelina',
@@ -66,7 +66,7 @@ const review = {
   id: 1,
   rating: 4,
   user: {
-    avatarUrl: 'avatar.png',
+    avatar: 'avatar.png',
     id: 4,
     isPro: false,
     name: 'Max'

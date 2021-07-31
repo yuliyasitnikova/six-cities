@@ -1,8 +1,7 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {getAuthStatus} from '../../store/user/selectors';
-import {Router as BrowserRouter, Route, Switch} from 'react-router-dom';
-import browserHistory from '../../browser-history';
+import {Route, Switch} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {isCheckedAuth} from '../../utils';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -23,33 +22,27 @@ function App() {
   }
 
   return (
-    <BrowserRouter history={browserHistory}>
-      <Switch>
-        <Route
-          path={AppRoute.MAIN}
-          exact
-          render={() => <PlacesScreen />}
-        />
-        <Route
-          path={AppRoute.LOGIN}
-          exact
-          render={() =><AuthScreen /> }
-        />
-        <PrivateRoute
-          path={AppRoute.FAVORITES}
-          exact
-          render={() => <FavoritesScreen />}
-        />
-        <Route
-          path={AppRoute.ROOM}
-          exact
-          render={({match}) => <PlaceScreen id={parseInt(match.params.id, 10)} />}
-        />
-        <Route
-          render={() => <NotFoundScreen />}
-        />
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <Route path={AppRoute.MAIN} exact>
+        <PlacesScreen />
+      </Route>
+      <Route
+        path={AppRoute.ROOM}
+        exact
+        render={({match}) => <PlaceScreen id={parseInt(match.params.id, 10)} />}
+      />
+      <PrivateRoute
+        path={AppRoute.FAVORITES}
+        exact
+        render={() => <FavoritesScreen />}
+      />
+      <Route path={AppRoute.LOGIN} exact>
+        <AuthScreen />
+      </Route>
+      <Route>
+        <NotFoundScreen />
+      </Route>
+    </Switch>
   );
 }
 
