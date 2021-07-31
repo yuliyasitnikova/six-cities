@@ -20,8 +20,9 @@ function Places({city, places}) {
         return places.slice().sort((a, b) => b.price - a.price);
       case SortType.RATING_TO_LOW:
         return places.slice().sort((a, b) => b.rating - a.rating);
+      default:
+        return places;
     }
-    return places;
   }, [places, sortType]);
 
   const handlePlaceMouseEnter = useCallback((id) => setActivePoint(id), []);

@@ -24,7 +24,7 @@ function useMap(mapRef, points, activePoint) {
 
       setMap(instance);
     }
-  }, [mapRef, map]);
+  }, [mapRef, map, latitude, longitude, zoom]);
 
   useEffect(() => {
     if (map) {

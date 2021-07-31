@@ -8,7 +8,7 @@ import {getAuthStatus} from '../../store/user/selectors';
 import {AppRoute} from '../../const';
 import {isAuth} from '../../utils';
 
-function BookmarkButton({className, placeId, isActive, children}) {
+function BookmarkButton({className, placeId, children, isActive}) {
   const dispatch = useDispatch();
   const authStatus = useSelector(getAuthStatus);
 
@@ -30,8 +30,8 @@ function BookmarkButton({className, placeId, isActive, children}) {
 BookmarkButton.propTypes = {
   className: PropTypes.string.isRequired,
   placeId: PropTypes.number.isRequired,
-  isActive: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
+  isActive: PropTypes.bool.isRequired,
 };
 
 export default BookmarkButton;

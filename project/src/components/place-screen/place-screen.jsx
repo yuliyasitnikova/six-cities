@@ -18,7 +18,7 @@ function PlaceScreen({id}) {
     window.scrollTo(0, 0);
     dispatch(clearPlace());
     dispatch(fetchPlace(id));
-  }, [id]);
+  }, [dispatch, id]);
 
 
   if (!place.isLoaded) {

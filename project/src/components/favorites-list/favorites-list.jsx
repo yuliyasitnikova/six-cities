@@ -23,7 +23,7 @@ function FavoritesList({places}) {
           </div>
           <div className="favorites__places">
             {favoritesObject[cityName].map((place) => (
-              <FavoritesItem key={place.title} place={place} />
+              <FavoritesItem key={`Favorite Item ${place.id}`} place={place} />
             ))}
           </div>
         </li>
