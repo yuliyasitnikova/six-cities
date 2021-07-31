@@ -48,7 +48,7 @@ export const loadFavorites = createAction(ActionType.LOAD_FAVORITES, (favorites)
   payload: favorites,
 }));
 
-export const updatePlaces = createAction(ActionType.UPDATE_PLACE, (place) => ({
+export const updatePlace = createAction(ActionType.UPDATE_PLACE, (place) => ({
   payload: place,
 }));
 

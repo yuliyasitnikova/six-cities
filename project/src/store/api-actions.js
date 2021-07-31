@@ -6,7 +6,7 @@ import {
   loadPlace,
   loadReviews,
   loadFavorites,
-  updatePlaces,
+  updatePlace,
   disableReviewForm,
   enableReviewForm,
   resetReviewForm,
@@ -100,7 +100,7 @@ export const setFavorite = (id, status) => async (dispatch, _getState, api) => {
   try {
     const {data} = await api.post(`${APIRoute.FAVORITES}/${id}/${status}`);
     const updated = adaptPlaceToClient(data);
-    dispatch(updatePlaces(updated));
+    dispatch(updatePlace(updated));
   }
   catch (err) {
     //todo: showError
