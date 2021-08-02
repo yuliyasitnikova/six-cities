@@ -5,23 +5,23 @@ const HttpCode = {
   UNAUTHORIZED: 401,
 };
 
+const onSuccess = (response) => response;
+
+const onFail = (onUnauthorized) => (err) => {
+  const {response} = err;
+
+  if (response.status === HttpCode.UNAUTHORIZED) {
+    onUnauthorized();
+  }
+
+  throw err;
+};
+
 export const createAPI = (onUnauthorized) => {
   const api = axios.create({
     baseURL: API_URL,
     timeout: REQUEST_TIMEOUT,
   });
-
-  const onSuccess = (response) => response;
-
-  const onFail = (err) => {
-    const {response} = err;
-
-    if (response.status === HttpCode.UNAUTHORIZED) {
-      onUnauthorized();
-    }
-
-    throw err;
-  };
 
   api.interceptors.request.use((config) => {
     config.headers['x-token'] = localStorage.getItem('token') ?? '';
@@ -29,7 +29,7 @@ export const createAPI = (onUnauthorized) => {
     return config;
   });
 
-  api.interceptors.response.use(onSuccess, onFail);
+  api.interceptors.response.use(onSuccess, onFail(onUnauthorized));
 
   return api;
 };
