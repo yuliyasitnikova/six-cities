@@ -3,6 +3,7 @@ import classnames from 'classnames/bind';
 import {useSelector, useDispatch} from 'react-redux';
 import {getPlacesList, getPlacesLoadedStatus} from '../../store/data/selectors';
 import {getCity} from '../../store/ui/selectors';
+import {getAuthStatus} from '../../store/user/selectors';
 import {changeCity} from '../../store/actions';
 import {fetchPlaces} from '../../store/api-actions';
 import {CITIES} from '../../const';
@@ -18,7 +19,8 @@ function PlacesScreen() {
 
   const city = useSelector(getCity);
   const places = useSelector(getPlacesList);
-  const isDataLoaded = useSelector(getPlacesLoadedStatus);
+  const isPlacesLoaded = useSelector(getPlacesLoadedStatus);
+  const authStatus = useSelector(getAuthStatus);
 
   const filteredPlaces = useMemo(() => places.filter((place) => place.city.name === city), [city, places]);
 
@@ -26,9 +28,9 @@ function PlacesScreen() {
 
   useEffect(() => {
     dispatch(fetchPlaces());
-  }, [dispatch]);
+  }, [dispatch, authStatus]);
 
-  if (!isDataLoaded) {
+  if (!isPlacesLoaded) {
     return (
       <LoadingScreen />
     );

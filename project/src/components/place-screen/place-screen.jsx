@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 import {getPlace} from '../../store/data/selectors';
+import {getAuthStatus} from '../../store/user/selectors';
 import {clearPlace} from '../../store/actions';
 import {fetchPlace} from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -13,12 +14,13 @@ import PlaceDetail from '../place-detail/place-detail';
 function PlaceScreen({id}) {
   const dispatch = useDispatch();
   const place = useSelector(getPlace);
+  const authStatus = useSelector(getAuthStatus);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(clearPlace());
     dispatch(fetchPlace(id));
-  }, [dispatch, id]);
+  }, [dispatch, id, authStatus]);
 
   if (!place.isLoaded) {
     return (
