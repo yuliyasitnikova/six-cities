@@ -8,8 +8,10 @@ import {isAuth} from '../../utils';
 import Header from '../header/header';
 import Main from '../main/main';
 
+const isHasOnlySpaces = (str) => str.match(/^\s+$/) !== null;
+
 function AuthScreen() {
-  const loginRef = useRef();
+  const emailRef = useRef();
   const passwordRef = useRef();
   const authorizationStatus = useSelector(getAuthStatus);
   const dispatch = useDispatch();
@@ -23,10 +25,12 @@ function AuthScreen() {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    dispatch(login({
-      login: loginRef.current.value,
-      password: passwordRef.current.value,
-    }));
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+
+    if (!isHasOnlySpaces(password)) {
+      dispatch(login({email, password}));
+    }
   };
 
   return (
@@ -39,7 +43,7 @@ function AuthScreen() {
             <form className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
-                <input ref={loginRef} className="login__input form__input" type="email" name="email" data-testid="login" placeholder="Email" required />
+                <input ref={emailRef} className="login__input form__input" type="email" name="email" data-testid="login" placeholder="Email" required />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>

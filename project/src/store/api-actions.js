@@ -24,7 +24,7 @@ export const checkAuth = () => async (dispatch, _getState, api) => {
   }
 };
 
-export const login = ({login: email, password}) => async (dispatch, _getState, api) => {
+export const login = ({email, password}) => async (dispatch, _getState, api) => {
   try {
     const {data} = await api.post(APIRoute.LOGIN, {email, password});
     const user = adaptUserToClient(data);
