@@ -6,9 +6,8 @@ export const APIRoute = {
   LOGIN: '/login',
   LOGOUT: '/logout',
   PLACES: '/hotels',
-  PLACE: '/hotels/:id',
-  NEARBY: '/hotels/:place_id/nearby',
-  REVIEWS: '/comments/:place_id',
+  NEARBY: '/nearby',
+  REVIEWS: '/comments',
   FAVORITES: '/favorite',
 };
 
@@ -17,6 +16,7 @@ export const AppRoute = {
   LOGIN: '/login',
   FAVORITES: '/favorites',
   ROOM: '/offer/:id',
+  NOT_FOUND: '/404',
 };
 
 export const AuthorizationStatus = {
@@ -66,6 +66,7 @@ export const ReviewSendStatus = {
   DEFAULT: 'DEFAULT',
   POSTING: 'POSTING',
   SUCCESS: 'SUCCESS',
+  ERROR: 'ERROR',
 };
 
 export const COMMENT_MIN_LENGTH = 50;

@@ -1,5 +1,15 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {loadUser, loadPlaces, loadPlace, loadReviews, clearPlace, loadFavorites, updatePlaces} from '../actions';
+import {
+  loadUser,
+  loadPlaces,
+  loadPlace,
+  loadReviews,
+  changeReviewPostStatus,
+  clearPlace,
+  loadFavorites,
+  updatePlace
+} from '../actions';
+import {ReviewSendStatus} from '../../const';
 
 const initialState = {
   user: {},
@@ -11,6 +21,7 @@ const initialState = {
     properties: {},
     nearby: [],
     reviews: [],
+    reviewSendStatus: null,
     isLoaded: false,
   },
   favorites: {
@@ -29,23 +40,24 @@ const data = createReducer(initialState, (builder) => {
       state.places.isLoaded = true;
     })
     .addCase(loadPlace, (state, action) => {
-      state.place = {
-        properties: action.payload.properties,
-        nearby: action.payload.nearby,
-        reviews: action.payload.reviews,
-        isLoaded: true,
-      };
+      state.place.properties = action.payload.properties;
+      state.place.nearby = action.payload.nearby;
+      state.place.reviews  = action.payload.reviews;
+      state.place.reviewSendStatus = ReviewSendStatus.DEFAULT;
+      state.place.isLoaded = true;
+    })
+    .addCase(changeReviewPostStatus, (state, action) => {
+      state.place.reviewSendStatus = action.payload;
+    })
+    .addCase(clearPlace, (state) => {
+      state.place.properties = {};
+      state.place.nearby = [];
+      state.place.reviews = [];
+      state.place.reviewSendStatus = null;
+      state.place.isLoaded = false;
     })
     .addCase(loadReviews, (state, action) => {
       state.place.reviews = action.payload;
-    })
-    .addCase(clearPlace, (state) => {
-      state.place = {
-        properties: {},
-        nearby: [],
-        reviews: [],
-        isLoaded: false,
-      };
     })
     .addCase(loadFavorites, (state, action) => {
       state.favorites = {
@@ -53,7 +65,7 @@ const data = createReducer(initialState, (builder) => {
         isLoaded: true,
       };
     })
-    .addCase(updatePlaces, (state, action) => {
+    .addCase(updatePlace, (state, action) => {
       const updated = action.payload;
       if (state.places.isLoaded) {
         state.places.list = state.places.list.map((place) => place.id === updated.id ? updated : place);

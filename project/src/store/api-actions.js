@@ -5,94 +5,113 @@ import {
   loadPlaces,
   loadPlace,
   loadReviews,
+  changeReviewPostStatus,
   loadFavorites,
-  updatePlaces,
-  disableReviewForm,
-  enableReviewForm,
-  resetReviewForm,
+  updatePlace,
   redirectToRoute
 } from './actions';
-import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
-import {adaptUserToClient, adaptPlaceToClient, adaptReviewToClient} from '../adapter';
+import {APIRoute, AppRoute, AuthorizationStatus, ReviewSendStatus} from '../const';
+import {adaptPlaceToClient, adaptReviewToClient, adaptUserToClient} from '../adapter';
 
 export const checkAuth = () => async (dispatch, _getState, api) => {
   try {
     const {data} = await api.get(APIRoute.LOGIN);
-    dispatch(loadUser(adaptUserToClient(data)));
+    const user = adaptUserToClient(data);
+    dispatch(loadUser(user));
     dispatch(requireAuthorization(AuthorizationStatus.AUTH));
-  } catch (err) {
-    //todo: showError
+  } catch {
+    dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH));
   }
 };
 
-export const login = ({login: email, password}) => async (dispatch, _getState, api) => {
-  const {data} = await api.post(APIRoute.LOGIN, {email, password});
-  localStorage.setItem('token', data.token);
-  dispatch(loadUser(adaptUserToClient(data)));
-  dispatch(requireAuthorization(AuthorizationStatus.AUTH));
-  dispatch(redirectToRoute(AppRoute.MAIN));
+export const login = ({email, password}) => async (dispatch, _getState, api) => {
+  try {
+    const {data} = await api.post(APIRoute.LOGIN, {email, password});
+    const user = adaptUserToClient(data);
+    dispatch(loadUser(user));
+    dispatch(requireAuthorization(AuthorizationStatus.AUTH));
+    dispatch(redirectToRoute(AppRoute.MAIN));
+    localStorage.setItem('token', data.token);
+  } catch {
+    dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH));
+  }
 };
 
 export const logout = () => async (dispatch, _getState, api) => {
   await api.delete(APIRoute.LOGOUT);
-  localStorage.removeItem('token');
   dispatch(closeSession());
+  localStorage.removeItem('token');
 };
 
 export const fetchPlaces = () => async (dispatch, _getState, api) => {
+  let places = [];
   try {
     const {data} = await api.get(APIRoute.PLACES);
-    const places = data.map(adaptPlaceToClient);
+    places = data.map(adaptPlaceToClient);
+    dispatch(loadPlaces(places));
+  } catch {
     dispatch(loadPlaces(places));
   }
-  catch (err) {
-    //todo: showError
+};
+
+const fetchPlaceProperties = async (api, id) => {
+  try {
+    const {data} = await api.get(`${APIRoute.PLACES}/${id}`);
+    return adaptPlaceToClient(data);
+  } catch {
+    return null;
+  }
+};
+
+const fetchPlaceNearby = async (api, id) => {
+  try {
+    const {data} = await api.get(`${APIRoute.PLACES}/${id}${APIRoute.NEARBY}`);
+    return data.map(adaptPlaceToClient);
+  } catch {
+    return [];
+  }
+};
+
+const fetchPlaceReviews = async (api, id) => {
+  try {
+    const {data} = await api.get(`${APIRoute.REVIEWS}/${id}`);
+    return data.map(adaptReviewToClient);
+  } catch {
+    return [];
   }
 };
 
 export const fetchPlace = (id) => async (dispatch, _getState, api) => {
-  try {
-    const [{data: place}, {data: nearby}, {data: reviews}] = await Promise.all([
-      api.get(APIRoute.PLACE.replace(':id', id)),
-      api.get(APIRoute.NEARBY.replace(':place_id', id)),
-      api.get(APIRoute.REVIEWS.replace(':place_id', id)),
-    ]);
+  const [properties, nearby, reviews] = await Promise.all([
+    fetchPlaceProperties(api, id),
+    fetchPlaceNearby(api, id),
+    fetchPlaceReviews(api, id),
+  ]);
 
-    const data = {
-      properties: adaptPlaceToClient(place),
-      nearby: nearby.map(adaptPlaceToClient),
-      reviews: reviews.map(adaptReviewToClient),
-    };
-    dispatch(loadPlace(data));
-  }
-  catch (err) {
-    //todo: showError
-  }
+  dispatch(loadPlace({properties, nearby, reviews}));
 };
 
-export const postReview = (place, {comment, rating}) => async (dispatch, _getState, api) => {
-  dispatch(disableReviewForm());
+export const postReview = (id, {comment, rating}) => async (dispatch, _getState, api) => {
+  dispatch(changeReviewPostStatus(ReviewSendStatus.POSTING));
 
   try {
-    const {data} = await api.post(APIRoute.REVIEWS.replace(':place_id', place), {comment, rating});
+    const {data} = await api.post(`${APIRoute.REVIEWS}/${id}`, {comment, rating});
     const reviews = data.map(adaptReviewToClient);
     dispatch(loadReviews(reviews));
-    dispatch(resetReviewForm());
-  }
-  catch {
-    //todo: showError
-    dispatch(enableReviewForm());
+    dispatch(changeReviewPostStatus(ReviewSendStatus.SUCCESS));
+  } catch {
+    dispatch(changeReviewPostStatus(ReviewSendStatus.ERROR));
   }
 };
 
 export const fetchFavorites = () => async (dispatch, _getState, api) => {
+  let places = [];
   try {
     const {data} = await api.get(APIRoute.FAVORITES);
-    const places = data.map(adaptPlaceToClient);
+    places = data.map(adaptPlaceToClient);
     dispatch(loadFavorites(places));
-  }
-  catch (err) {
-    //todo: showError
+  } catch {
+    dispatch(loadFavorites(places));
   }
 };
 
@@ -100,9 +119,8 @@ export const setFavorite = (id, status) => async (dispatch, _getState, api) => {
   try {
     const {data} = await api.post(`${APIRoute.FAVORITES}/${id}/${status}`);
     const updated = adaptPlaceToClient(data);
-    dispatch(updatePlaces(updated));
-  }
-  catch (err) {
-    //todo: showError
+    dispatch(updatePlace(updated));
+  } catch {
+    dispatch(redirectToRoute(AppRoute.LOGIN));
   }
 };

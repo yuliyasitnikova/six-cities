@@ -17,3 +17,8 @@ export const getRatingWidth = (rating = 0) => {
 export const isAuth = (authorizationStatus) => (
   authorizationStatus === AuthorizationStatus.AUTH
 );
+
+export const isCheckedAuth = (authorizationStatus) => (
+  authorizationStatus === AuthorizationStatus.UNKNOWN
+);
+
