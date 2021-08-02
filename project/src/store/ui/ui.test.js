@@ -8,7 +8,6 @@ describe('Reducer: ui', () => {
       .toEqual({
         city: defaultCity,
         sortType: SortType.DEFAULT,
-        reviewSendStatus: ReviewSendStatus.DEFAULT,
       });
   });
 
@@ -41,51 +40,6 @@ describe('Reducer: ui', () => {
     expect(ui(state, changeSortAction))
       .toEqual({
         sortType: 'Sort type',
-      });
-  });
-
-  it('should update review send status by disable review form', () => {
-    const state = {
-      reviewSendStatus: ReviewSendStatus.DEFAULT,
-    };
-
-    const disableReviewFormAction = {
-      type: ActionType.DISABLE_REVIEW_FORM,
-    };
-
-    expect(ui(state, disableReviewFormAction))
-      .toEqual({
-        reviewSendStatus: ReviewSendStatus.POSTING,
-      });
-  });
-
-  it('should update review send status by enable review form', () => {
-    const state = {
-      reviewSendStatus: ReviewSendStatus.POSTING,
-    };
-
-    const enableReviewFormAction = {
-      type: ActionType.ENABLE_REVIEW_FORM,
-    };
-
-    expect(ui(state, enableReviewFormAction))
-      .toEqual({
-        reviewSendStatus: ReviewSendStatus.DEFAULT,
-      });
-  });
-
-  it('should update review send status by reset review form', () => {
-    const state = {
-      reviewSendStatus: ReviewSendStatus.POSTING,
-    };
-
-    const resetReviewFormAction = {
-      type: ActionType.RESET_REVIEW_FORM,
-    };
-
-    expect(ui(state, resetReviewFormAction))
-      .toEqual({
-        reviewSendStatus: ReviewSendStatus.SUCCESS,
       });
   });
 });

@@ -3,18 +3,17 @@ import {
   loadUser,
   loadPlaces,
   loadPlace,
+  changeReviewPostStatus,
   clearPlace,
   loadReviews,
   loadFavorites,
   updatePlace,
   changeCity,
   changeSort,
-  disableReviewForm,
-  enableReviewForm,
-  resetReviewForm,
   redirectToRoute,
   ActionType,
 } from './actions';
+import {ReviewSendStatus} from '../const';
 
 const user = {
   avatar: 'avatar.png',
@@ -119,6 +118,17 @@ describe('Actions', () => {
     expect(loadPlace(payload)).toEqual(expectedAction);
   });
 
+  it('action creator for change review post status returns correct action', () => {
+    const payload = ReviewSendStatus.POSTING;
+
+    const expectedAction = {
+      type: ActionType.CHANGE_REVIEW_POST_STATUS,
+      payload,
+    };
+
+    expect(changeReviewPostStatus(payload)).toEqual(expectedAction);
+  });
+
   it('action creator for clear place returns action with undefined payload', () => {
     const expectedAction = {
       type: ActionType.CLEAR_PLACE,
@@ -180,30 +190,6 @@ describe('Actions', () => {
     };
 
     expect(changeSort(payload)).toEqual(expectedAction);
-  });
-
-  it('action creator for disable review form returns action with undefined payload', () => {
-    const expectedAction = {
-      type: ActionType.DISABLE_REVIEW_FORM,
-    };
-
-    expect(disableReviewForm()).toEqual(expectedAction);
-  });
-
-  it('action creator for enable review form returns action with undefined payload', () => {
-    const expectedAction = {
-      type: ActionType.ENABLE_REVIEW_FORM,
-    };
-
-    expect(enableReviewForm()).toEqual(expectedAction);
-  });
-
-  it('action creator for reset review form returns action with undefined payload', () => {
-    const expectedAction = {
-      type: ActionType.RESET_REVIEW_FORM,
-    };
-
-    expect(resetReviewForm()).toEqual(expectedAction);
   });
 
   it('action creator for redirect returns correct action', () => {

@@ -66,6 +66,7 @@ export const ReviewSendStatus = {
   DEFAULT: 'DEFAULT',
   POSTING: 'POSTING',
   SUCCESS: 'SUCCESS',
+  ERROR: 'ERROR',
 };
 
 export const COMMENT_MIN_LENGTH = 50;

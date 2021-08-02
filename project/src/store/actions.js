@@ -8,15 +8,13 @@ export const ActionType = {
   LOAD_PLACES: 'data/loadPlaces',
   LOAD_PLACE: 'data/loadPlace',
   LOAD_REVIEWS: 'data/loadReviews',
+  CHANGE_REVIEW_POST_STATUS: 'data/changeReviewPostStatus',
   CLEAR_PLACE: 'data/clearPlace',
   LOAD_FAVORITES: 'data/loadFavorites',
   UPDATE_PLACE: 'data/updatePlace',
 
   CHANGE_CITY: 'ui/changeCity',
   CHANGE_SORT: 'ui/changeSort',
-  DISABLE_REVIEW_FORM: 'ui/disableReviewForm',
-  ENABLE_REVIEW_FORM: 'ui/enableReviewForm',
-  RESET_REVIEW_FORM: 'ui/resetReviewForm',
   REDIRECT_TO_ROUTE: 'ui/redirectToRoute',
 };
 
@@ -37,6 +35,8 @@ export const loadPlaces = createAction(ActionType.LOAD_PLACES, (places) => ({
 export const loadPlace = createAction(ActionType.LOAD_PLACE, (data) => ({
   payload: data,
 }));
+
+export const changeReviewPostStatus = createAction(ActionType.CHANGE_REVIEW_POST_STATUS);
 
 export const clearPlace = createAction(ActionType.CLEAR_PLACE);
 
@@ -59,12 +59,6 @@ export const changeCity = createAction(ActionType.CHANGE_CITY, (city) => ({
 export const changeSort = createAction(ActionType.CHANGE_SORT, (type) => ({
   payload: type,
 }));
-
-export const disableReviewForm = createAction(ActionType.DISABLE_REVIEW_FORM);
-
-export const enableReviewForm = createAction(ActionType.ENABLE_REVIEW_FORM);
-
-export const resetReviewForm = createAction(ActionType.RESET_REVIEW_FORM);
 
 export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
   payload: url,

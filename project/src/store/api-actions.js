@@ -5,14 +5,12 @@ import {
   loadPlaces,
   loadPlace,
   loadReviews,
+  changeReviewPostStatus,
   loadFavorites,
   updatePlace,
-  disableReviewForm,
-  enableReviewForm,
-  resetReviewForm,
   redirectToRoute
 } from './actions';
-import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
+import {APIRoute, AppRoute, AuthorizationStatus, ReviewSendStatus} from '../const';
 import {adaptPlaceToClient, adaptReviewToClient, adaptUserToClient} from '../adapter';
 
 export const checkAuth = () => async (dispatch, _getState, api) => {
@@ -94,16 +92,15 @@ export const fetchPlace = (id) => async (dispatch, _getState, api) => {
 };
 
 export const postReview = (id, {comment, rating}) => async (dispatch, _getState, api) => {
-  dispatch(disableReviewForm());
+  dispatch(changeReviewPostStatus(ReviewSendStatus.POSTING));
 
   try {
     const {data} = await api.post(`${APIRoute.REVIEWS}/${id}`, {comment, rating});
     const reviews = data.map(adaptReviewToClient);
     dispatch(loadReviews(reviews));
-    dispatch(resetReviewForm());
+    dispatch(changeReviewPostStatus(ReviewSendStatus.SUCCESS));
   } catch {
-    //todo: showError
-    dispatch(enableReviewForm());
+    dispatch(changeReviewPostStatus(ReviewSendStatus.ERROR));
   }
 };
 

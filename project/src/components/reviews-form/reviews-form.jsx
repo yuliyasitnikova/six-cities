@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
-import {getReviewSendStatus} from '../../store/ui/selectors';
+import {getReviewSendStatus} from '../../store/data/selectors';
 import {postReview} from '../../store/api-actions';
 import {ReviewSendStatus, COMMENT_MIN_LENGTH, COMMENT_MAX_LENGTH} from '../../const';
+import Alert from '../alert/alert';
 
 const ratingValues = [
   {value: 5, title: 'perfect'},
@@ -21,7 +22,8 @@ function ReviewsForm({place}) {
   const dispatch = useDispatch();
 
   const isReviewPosting = reviewSendStatus === ReviewSendStatus.POSTING;
-  const isReviewAdding = reviewSendStatus === ReviewSendStatus.SUCCESS;
+  const isReviewPostSuccess = reviewSendStatus === ReviewSendStatus.SUCCESS;
+  const isReviewPostFailed = reviewSendStatus === ReviewSendStatus.ERROR;
   const isButtonDisabled = rating === null || comment.length < COMMENT_MIN_LENGTH || isReviewPosting;
 
   const handleRatingChange = ({target}) => setRating(Number(target.value));
@@ -39,11 +41,14 @@ function ReviewsForm({place}) {
   useEffect(() => {
     setComment('');
     setRating(null);
-  }, [isReviewAdding]);
+  }, [isReviewPostSuccess]);
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
+      {isReviewPostFailed && <Alert message="Review post failed" />}
+
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
+
 
       <div className="reviews__rating-form form__rating">
         {ratingValues.map(({title, value}) => (
@@ -66,6 +71,8 @@ function ReviewsForm({place}) {
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled={isButtonDisabled}>Submit</button>
       </div>
+
+
     </form>
   );
 }

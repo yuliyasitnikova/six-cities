@@ -147,3 +147,12 @@
   font-size: 32px;
   line-height: 1.1875;
 }
+.alert {
+  position: relative;
+  padding: 15px 20px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  background-color: #edb5ba;
+  border-radius: 3px;
+  color: #842029;
+}

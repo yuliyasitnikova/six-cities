@@ -2,7 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from '../api';
 import {ActionType} from './actions';
 import {checkAuth, login, logout, fetchPlaces, fetchPlace, postReview, fetchFavorites, setFavorite} from './api-actions';
-import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
+import {APIRoute, AppRoute, AuthorizationStatus, ReviewSendStatus} from '../const';
 
 jest.mock('../adapter');
 
@@ -141,14 +141,16 @@ describe('Async actions', () => {
     await postReviewLoader(dispatch, () => {}, api);
     expect(dispatch).toHaveBeenCalledTimes(3);
     expect(dispatch).toHaveBeenNthCalledWith(1, {
-      type: ActionType.DISABLE_REVIEW_FORM,
+      type: ActionType.CHANGE_REVIEW_POST_STATUS,
+      payload: ReviewSendStatus.POSTING,
     });
     expect(dispatch).toHaveBeenNthCalledWith(2, {
       type: ActionType.LOAD_REVIEWS,
       payload: [{fake: true}],
     });
     expect(dispatch).toHaveBeenNthCalledWith(3, {
-      type: ActionType.RESET_REVIEW_FORM,
+      type: ActionType.CHANGE_REVIEW_POST_STATUS,
+      payload: ReviewSendStatus.SUCCESS,
     });
   });
 

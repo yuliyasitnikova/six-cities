@@ -1,5 +1,6 @@
 import {data} from './data';
 import {ActionType} from '../actions';
+import {ReviewSendStatus} from '../../const';
 
 describe('Reducer: data', () => {
   it('should return the initial state', () => {
@@ -14,6 +15,7 @@ describe('Reducer: data', () => {
           properties: {},
           nearby: [],
           reviews: [],
+          reviewSendStatus: null,
           isLoaded: false,
         },
         favorites: {
@@ -73,6 +75,7 @@ describe('Reducer: data', () => {
         properties: {},
         nearby: [],
         reviews: [],
+        reviewSendStatus: null,
         isLoaded: false,
       },
     };
@@ -102,6 +105,7 @@ describe('Reducer: data', () => {
           reviews: [
             {id: 10},
           ],
+          reviewSendStatus: ReviewSendStatus.DEFAULT,
           isLoaded: true,
         },
       });
@@ -118,6 +122,7 @@ describe('Reducer: data', () => {
         reviews: [
           {id: 10},
         ],
+        reviewSendStatus: ReviewSendStatus.ERROR,
         isLoaded: true,
       }
     };
@@ -132,6 +137,7 @@ describe('Reducer: data', () => {
           properties: {},
           nearby: [],
           reviews: [],
+          reviewSendStatus: null,
           isLoaded: false,
         },
       });
@@ -321,6 +327,26 @@ describe('Reducer: data', () => {
           ],
           isLoaded: true,
         },
+      });
+  });
+
+  it('should update review post status by change review post status', () => {
+    const state = {
+      place: {
+        reviewSendStatus: ReviewSendStatus.DEFAULT,
+      }
+    };
+
+    const changeReviewPostStatusAction = {
+      type: ActionType.CHANGE_REVIEW_POST_STATUS,
+      payload: ReviewSendStatus.POSTING,
+    };
+
+    expect(data(state, changeReviewPostStatusAction))
+      .toEqual({
+        place: {
+          reviewSendStatus: ReviewSendStatus.POSTING,
+        }
       });
   });
 });
