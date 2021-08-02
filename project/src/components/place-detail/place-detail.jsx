@@ -81,7 +81,7 @@ function PlaceDetail({place}) {
         <PlaceMap points={[...nearby, currentPlace]} activePoint={id} />
       </section>
       <div className="container">
-        <PlacesNear places={nearby} />
+        {nearby.length > 0 && <PlacesNear places={nearby} />}
       </div>
     </>
   );

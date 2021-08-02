@@ -1,22 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import {useDispatch, useSelector} from 'react-redux';
-import {redirectToRoute} from '../../store/actions';
+import {useDispatch} from 'react-redux';
 import {setFavorite} from '../../store/api-actions';
-import {getAuthStatus} from '../../store/user/selectors';
-import {AppRoute} from '../../const';
-import {isAuth} from '../../utils';
 
 function BookmarkButton({className, placeId, children, isActive}) {
   const dispatch = useDispatch();
-  const authStatus = useSelector(getAuthStatus);
 
   const handleClick = () => {
-    if (!isAuth(authStatus)) {
-      return dispatch(redirectToRoute(AppRoute.LOGIN));
-    }
-
     dispatch(setFavorite(placeId, Number(!isActive)));
   };
 
