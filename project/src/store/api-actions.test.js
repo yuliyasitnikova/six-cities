@@ -4,6 +4,8 @@ import {ActionType} from './actions';
 import {checkAuth, login, logout, fetchPlaces, fetchPlace, postReview, fetchFavorites, setFavorite} from './api-actions';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
 
+jest.mock('../adapter');
+
 let api = null;
 
 describe('Async actions', () => {
@@ -11,7 +13,7 @@ describe('Async actions', () => {
     api = createAPI(() => {});
   });
 
-  it('should make a correct API call to check auth', () => {
+  it('should make a correct API call to check auth', async () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const checkAuthLoader = checkAuth();
@@ -20,49 +22,45 @@ describe('Async actions', () => {
       .onGet(APIRoute.LOGIN)
       .reply(200, [{fake: true}]);
 
-    return checkAuthLoader(dispatch, () => {}, api)
-      .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(2);
-        expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_USER,
-          payload: [{fake: true}],
-        });
-        expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: ActionType.REQUIRED_AUTHORIZATION,
-          payload: AuthorizationStatus.AUTH,
-        });
+    await checkAuthLoader(dispatch, () => {}, api);
+      expect(dispatch).toHaveBeenCalledTimes(2);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: ActionType.LOAD_USER,
+        payload: [{fake: true}],
+      });
+      expect(dispatch).toHaveBeenNthCalledWith(2, {
+        type: ActionType.REQUIRED_AUTHORIZATION,
+        payload: AuthorizationStatus.AUTH,
       });
   });
 
-  it('should make a correct API call to login', () => {
+  it('should make a correct API call to login', async () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
-    const fakeUser = {login: 'test@test.ru', password: '123456'};
+    const fakeUser = {email: 'test@test.ru', password: '123456'};
     const loginLoader = login(fakeUser);
 
     apiMock
       .onPost(APIRoute.LOGIN)
       .reply(200, [{fake: true}]);
 
-    return loginLoader(dispatch, () => {}, api)
-      .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(3);
-        expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_USER,
-          payload: [{fake: true}],
-        });
-        expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: ActionType.REQUIRED_AUTHORIZATION,
-          payload: AuthorizationStatus.AUTH,
-        });
-        expect(dispatch).toHaveBeenNthCalledWith(3, {
-          type: ActionType.REDIRECT_TO_ROUTE,
-          payload: AppRoute.MAIN,
-        });
-      });
+    await loginLoader(dispatch, () => {}, api);
+    expect(dispatch).toHaveBeenCalledTimes(3);
+    expect(dispatch).toHaveBeenNthCalledWith(1, {
+      type: ActionType.LOAD_USER,
+      payload: [{fake: true}],
+    });
+    expect(dispatch).toHaveBeenNthCalledWith(2, {
+      type: ActionType.REQUIRED_AUTHORIZATION,
+      payload: AuthorizationStatus.AUTH,
+    });
+    expect(dispatch).toHaveBeenNthCalledWith(3, {
+      type: ActionType.REDIRECT_TO_ROUTE,
+      payload: AppRoute.MAIN,
+    });
   });
 
-  it('should make a correct API call to logout', () => {
+  it('should make a correct API call to logout', async () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const logoutLoader = logout();
@@ -71,52 +69,122 @@ describe('Async actions', () => {
 
     apiMock
       .onDelete(APIRoute.LOGOUT)
-      .reply(204, [{fake: true}]);
+      .reply(204);
 
-    return logoutLoader(dispatch, () => {}, api)
-      .then(() => {
-        expect(Storage.prototype.removeItem).toBeCalledTimes(1);
-        expect(Storage.prototype.removeItem).nthCalledWith(1, 'token');
-
-        expect(dispatch).toBeCalledTimes(1);
-        expect(dispatch).nthCalledWith(1, {
-          type: ActionType.LOGOUT,
-        });
-      });
+    await logoutLoader(dispatch, () => {}, api)
+    expect(dispatch).toBeCalledTimes(1);
+    expect(dispatch).nthCalledWith(1, {
+      type: ActionType.LOGOUT,
+    });
+    expect(Storage.prototype.removeItem).toBeCalledTimes(1);
+    expect(Storage.prototype.removeItem).nthCalledWith(1, 'token');
   });
 
-  it('should make a correct API call to get places', () => {
+  it('should make a correct API call to get places', async () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
-    const placesLoader = fetchPlaces();
+    const fetchPlacesLoader = fetchPlaces();
 
     apiMock
       .onGet(APIRoute.PLACES)
       .reply(200, [{fake: true}]);
 
-    return placesLoader(dispatch, () => {}, api)
-      .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(1);
-        expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_PLACES,
-          payload: [{fake: true}],
-        });
-      });
+    await fetchPlacesLoader(dispatch, () => {}, api);
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenNthCalledWith(1, {
+      type: ActionType.LOAD_PLACES,
+      payload: [{fake: true}],
+    });
   });
 
-  it('should make a correct API call to get place', () => {
+  it('should make a correct API call to get place', async () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const fakeId = 42;
+    const fetchPlaceLoader = fetchPlace(fakeId);
 
+    apiMock
+      .onGet(`${APIRoute.PLACES}/${fakeId}`)
+      .reply(200, [{properties: true}]);
+
+    apiMock
+      .onGet(`${APIRoute.PLACES}/${fakeId}${APIRoute.NEARBY}`)
+      .reply(200, [{nearby: true}]);
+
+    apiMock
+      .onGet(`${APIRoute.REVIEWS}/${fakeId}`)
+      .reply(200, [{reviews: true}]);
+
+    await fetchPlaceLoader(dispatch, () => {}, api);
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenNthCalledWith(1, {
+      type: ActionType.LOAD_PLACE,
+      payload: {
+        properties: [{properties: true}],
+        nearby: [{nearby: true}],
+        reviews: [{reviews: true}],
+      },
+    });
   });
 
-  it('should make a correct API call to post review', () => {
+  it('should make a correct API call to post review', async () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const fakeId = 42;
+    const fakeReview = {comment: 'test comment', rating: 4};
+    const postReviewLoader = postReview(fakeId, fakeReview);
 
+    apiMock
+      .onPost(`${APIRoute.REVIEWS}/${fakeId}`)
+      .reply(200, [{fake: true}]);
+
+    await postReviewLoader(dispatch, () => {}, api);
+    expect(dispatch).toHaveBeenCalledTimes(3);
+    expect(dispatch).toHaveBeenNthCalledWith(1, {
+      type: ActionType.DISABLE_REVIEW_FORM,
+    });
+    expect(dispatch).toHaveBeenNthCalledWith(2, {
+      type: ActionType.LOAD_REVIEWS,
+      payload: [{fake: true}],
+    });
+    expect(dispatch).toHaveBeenNthCalledWith(3, {
+      type: ActionType.RESET_REVIEW_FORM,
+    });
   });
 
-  it('should make a correct API call to get favorites', () => {
+  it('should make a correct API call to get favorites', async () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const fetchFavoritesLoader = fetchFavorites();
 
+    apiMock
+      .onGet(APIRoute.FAVORITES)
+      .reply(200, [{fake: true}]);
+
+    await fetchFavoritesLoader(dispatch, () => {}, api);
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenNthCalledWith(1, {
+      type: ActionType.LOAD_FAVORITES,
+      payload: [{fake: true}],
+    });
   });
 
-  it('should make a correct API call to set favorite', () => {
+  it('should make a correct API call to set favorite', async () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const fakeId = 42;
+    const fakeStatus = 1;
+    const setFavoriteLoader = setFavorite(fakeId, fakeStatus);
 
+    apiMock
+      .onPost(`${APIRoute.FAVORITES}/${fakeId}/${fakeStatus}`)
+      .reply(200, [{fake: true}]);
+
+    await setFavoriteLoader(dispatch, () => {}, api);
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenNthCalledWith(1, {
+      type: ActionType.UPDATE_PLACE,
+      payload: [{fake: true}],
+    });
   });
 });
