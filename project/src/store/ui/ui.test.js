@@ -1,6 +1,6 @@
 import {ui} from './ui';
 import {ActionType} from '../actions';
-import {defaultCity, ReviewSendStatus, SortType} from '../../const';
+import {defaultCity, SortType} from '../../const';
 
 describe('Reducer: ui', () => {
   it('should returns the initial state', () => {

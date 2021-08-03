@@ -124,7 +124,7 @@ describe('Reducer: data', () => {
         ],
         reviewSendStatus: ReviewSendStatus.ERROR,
         isLoaded: true,
-      }
+      },
     };
 
     const clearPlaceAction = {
@@ -155,7 +155,7 @@ describe('Reducer: data', () => {
           {id: 10},
         ],
         isLoaded: true,
-      }
+      },
     };
 
     const loadReviewAction = {
@@ -228,6 +228,7 @@ describe('Reducer: data', () => {
       },
       place: {
         properties: {},
+        nearby: [],
         isLoaded: false,
       },
       favorites: {
@@ -247,6 +248,7 @@ describe('Reducer: data', () => {
         },
         place: {
           properties: {},
+          nearby: [],
           isLoaded: false,
         },
         favorites: {
@@ -254,7 +256,6 @@ describe('Reducer: data', () => {
           isLoaded: false,
         },
       });
-
 
     const stateWithLoadedPlace = {
       places: {
@@ -266,6 +267,7 @@ describe('Reducer: data', () => {
           id: 2,
           isFavorite: true,
         },
+        nearby: [],
         isLoaded: true,
       },
       favorites: {
@@ -285,6 +287,7 @@ describe('Reducer: data', () => {
             id: 2,
             isFavorite: false,
           },
+          nearby: [],
           isLoaded: true,
         },
         favorites: {
@@ -300,6 +303,7 @@ describe('Reducer: data', () => {
       },
       place: {
         properties: {},
+        nearby: [],
         isLoaded: false,
       },
       favorites: {
@@ -319,6 +323,7 @@ describe('Reducer: data', () => {
         },
         place: {
           properties: {},
+          nearby: [],
           isLoaded: false,
         },
         favorites: {
@@ -334,7 +339,7 @@ describe('Reducer: data', () => {
     const state = {
       place: {
         reviewSendStatus: ReviewSendStatus.DEFAULT,
-      }
+      },
     };
 
     const changeReviewPostStatusAction = {
@@ -346,7 +351,7 @@ describe('Reducer: data', () => {
       .toEqual({
         place: {
           reviewSendStatus: ReviewSendStatus.POSTING,
-        }
+        },
       });
   });
 });

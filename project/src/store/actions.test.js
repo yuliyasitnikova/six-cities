@@ -11,7 +11,7 @@ import {
   changeCity,
   changeSort,
   redirectToRoute,
-  ActionType,
+  ActionType
 } from './actions';
 import {ReviewSendStatus} from '../const';
 
@@ -68,7 +68,7 @@ const review = {
     avatar: 'avatar.png',
     id: 4,
     isPro: false,
-    name: 'Max'
+    name: 'Max',
   },
 };
 
@@ -87,7 +87,7 @@ describe('Actions', () => {
     const expectedAction = {
       type: ActionType.LOAD_USER,
       payload,
-    }
+    };
 
     expect(loadUser(payload)).toEqual(expectedAction);
   });

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 import {getReviewSendStatus} from '../../store/data/selectors';
 import {postReview} from '../../store/api-actions';
-import {ReviewSendStatus, COMMENT_MIN_LENGTH, COMMENT_MAX_LENGTH} from '../../const';
+import {ReviewSendStatus, MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH} from '../../const';
 import Alert from '../alert/alert';
 
 const ratingValues = [
@@ -24,7 +24,7 @@ function ReviewsForm({place}) {
   const isReviewPosting = reviewSendStatus === ReviewSendStatus.POSTING;
   const isReviewPostSuccess = reviewSendStatus === ReviewSendStatus.SUCCESS;
   const isReviewPostFailed = reviewSendStatus === ReviewSendStatus.ERROR;
-  const isButtonDisabled = rating === null || comment.length < COMMENT_MIN_LENGTH || isReviewPosting;
+  const isButtonDisabled = rating === null || comment.length < MIN_COMMENT_LENGTH || isReviewPosting;
 
   const handleRatingChange = ({target}) => setRating(Number(target.value));
 
@@ -63,11 +63,11 @@ function ReviewsForm({place}) {
         ))}
       </div>
 
-      <textarea className="reviews__textarea form__textarea" id="review" name="review" value={comment} maxLength={COMMENT_MAX_LENGTH} placeholder="Tell how was your stay, what you like and what can be improved" disabled={isReviewPosting} onChange={handleCommentChange} />
+      <textarea className="reviews__textarea form__textarea" id="review" name="review" value={comment} maxLength={MAX_COMMENT_LENGTH} placeholder="Tell how was your stay, what you like and what can be improved" disabled={isReviewPosting} onChange={handleCommentChange} />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay
-          with at least <b className="reviews__text-amount">{COMMENT_MIN_LENGTH} characters</b>.
+          with at least <b className="reviews__text-amount">{MIN_COMMENT_LENGTH} characters</b>.
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled={isButtonDisabled}>Submit</button>
       </div>

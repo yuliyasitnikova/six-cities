@@ -36,7 +36,7 @@ function PlacesItem({className = '', place, onMouseEnter, onMouseLeave}) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: getRatingWidth(rating)}} />
+            <span style={{width: getRatingWidth(Math.round(rating))}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

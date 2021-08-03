@@ -27,7 +27,7 @@ function Cities({cities, city, onChangeCity}) {
 }
 
 Cities.propTypes = {
-  cities: PropTypes.array.isRequired,
+  cities: PropTypes.arrayOf(PropTypes.string).isRequired,
   city: PropTypes.string.isRequired,
   onChangeCity: PropTypes.func.isRequired,
 };

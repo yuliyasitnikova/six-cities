@@ -50,6 +50,12 @@ export const MAP_ICON_ACTIVE = {
 
 export const MAX_RATING_VALUE = 5;
 
+export const MAX_REVIEWS_COUNT = 10;
+
+export const MAX_COMMENT_LENGTH = 300;
+
+export const MIN_COMMENT_LENGTH = 50;
+
 export const PlacesListClassModifier = {
   CITIES: 'cities__places-list',
   NEAR_PLACES: 'near-places__list',
@@ -69,6 +75,3 @@ export const ReviewSendStatus = {
   ERROR: 'ERROR',
 };
 
-export const COMMENT_MIN_LENGTH = 50;
-
-export const COMMENT_MAX_LENGTH = 300;

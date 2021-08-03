@@ -23,15 +23,15 @@ describe('Async actions', () => {
       .reply(200, [{fake: true}]);
 
     await checkAuthLoader(dispatch, () => {}, api);
-      expect(dispatch).toHaveBeenCalledTimes(2);
-      expect(dispatch).toHaveBeenNthCalledWith(1, {
-        type: ActionType.LOAD_USER,
-        payload: [{fake: true}],
-      });
-      expect(dispatch).toHaveBeenNthCalledWith(2, {
-        type: ActionType.REQUIRED_AUTHORIZATION,
-        payload: AuthorizationStatus.AUTH,
-      });
+    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(dispatch).toHaveBeenNthCalledWith(1, {
+      type: ActionType.LOAD_USER,
+      payload: [{fake: true}],
+    });
+    expect(dispatch).toHaveBeenNthCalledWith(2, {
+      type: ActionType.REQUIRED_AUTHORIZATION,
+      payload: AuthorizationStatus.AUTH,
+    });
   });
 
   it('should make a correct API call to login', async () => {
@@ -71,7 +71,7 @@ describe('Async actions', () => {
       .onDelete(APIRoute.LOGOUT)
       .reply(204);
 
-    await logoutLoader(dispatch, () => {}, api)
+    await logoutLoader(dispatch, () => {}, api);
     expect(dispatch).toBeCalledTimes(1);
     expect(dispatch).nthCalledWith(1, {
       type: ActionType.LOGOUT,

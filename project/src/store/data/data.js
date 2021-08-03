@@ -71,7 +71,8 @@ const data = createReducer(initialState, (builder) => {
         state.places.list = state.places.list.map((place) => place.id === updated.id ? updated : place);
       }
       if (state.place.isLoaded) {
-        state.place.properties = updated;
+        state.place.properties = state.place.properties.id === updated.id ? updated : state.place.properties;
+        state.place.nearby = state.place.nearby.map((place) => place.id === updated.id ? updated : place);
       }
       if (state.favorites.isLoaded) {
         state.favorites.list = state.favorites.list.filter((place) => place.id !== updated.id);
